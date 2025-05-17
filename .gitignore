@@ -1,0 +1,68 @@
+# -------------------------------------------------------
+# General OS and Volume-Level Ignore Rules (macOS)
+# -------------------------------------------------------
+
+# macOS system metadata files (often created automatically)
+.DS_Store              # Finder folder metadata
+.AppleDouble           # AppleDouble encoded files (resource forks)
+.LSOverride            # Custom Finder view settings
+.Icon                  # Custom folder icons (binary, often ends in \r)
+
+# Spotlight & Trash system folders (not needed in repos)
+.Spotlight-V100        # Spotlight index
+.Trashes               # Trash folder for removable drives
+.fseventsd             # File system events daemon metadata
+.TemporaryItems        # Temporary cache files (e.g., from Office)
+.VolumeIcon.icns       # Custom disk icon
+.DocumentRevisions-V100 # Versioning support by Apple (e.g. Pages, TextEdit)
+
+# Time Machine backup indicator
+.com.apple.timemachine.donotpresent
+
+# Files from AFP (Apple Filing Protocol) remote shares
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Files with resource fork thumbnails (macOS extended attributes)
+._*
+
+# Windows junk files (for shared drives, just in case)
+Thumbs.db
+ehthumbs.db
+
+# -------------------------------------------------------
+# 📝 Neovim Temporary Files (Swaps, Backups, Undo)
+# -------------------------------------------------------
+
+*.swp       # Swap files - unsaved changes
+*.swo       # Older swap versions
+*.swn       # Additional swap backups
+*.bak       # Manual or auto-created backups
+*.tmp       # General temporary files
+*.un~       # Undo history (sometimes used by plugins)
+
+# Neovim backup/swap folders if you configure them
+# .nv_backups/
+# .nv_undo/
+# .nv_swap/
+
+# -------------------------------------------------------
+# 📦 Docker and Dev Environment (add your own below)
+# -------------------------------------------------------
+
+# Ignore environment variable files (used in Docker/CI)
+*.env
+.env
+
+# -------------------------------------------------------
+# 🔧 IDE/editor-specific files (add based on your tools)
+# -------------------------------------------------------
+
+# VSCode settings
+.vscode/
+
+# JetBrains IDEs (uncomment if you use: PyCharm, IntelliJ, etc.)
+# .idea/
