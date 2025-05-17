@@ -1,0 +1,82 @@
+-- keymaps.lua
+-- 🧭 Custom keybindings (shortcuts) for Neovim
+-- These mappings improve productivity by making common actions faster.
+
+-- 🧠 Legend:
+-- Modes: "n" = Normal, "v" = Visual, "i" = Insert
+-- <leader> = Spacebar (set below)
+-- <D-*> = Cmd key on macOS (⌘)
+
+-- 🚀 Set <leader> key
+vim.g.mapleader = " "
+
+-- ⛏ Helper alias for shorter calls
+-- Creates a local shortcut to the Neovim keymap function
+-- Makes it easier to reuse without typing `vim.keymap.set` every time
+local keymap = vim.keymap.set
+
+-- ========================================
+-- 📁 NORMAL MODE KEYBINDINGS
+-- ========================================
+-- ⓘ This first keybinding is fully broken down for learning purposes:
+-- - It explains what each part of the keymap does.
+-- - All future keymaps below will follow a cleaner format (see 🗂 example).
+-- - This helps keep things readable while still leaving one “reference” example.
+
+-- Normal mode keybinding: Open the file explorer
+-- "n": means this works in Normal mode
+-- "<leader>e": means you press: Spacebar, then E
+-- ":Ex<CR>": is the command to open netrw (the file explorer) and "press Enter"
+-- -------- The 'desc' helps tools like 'which-key' show what the shortcut does
+
+-- 🗂 Open file explorer (netrw)
+keymap("n", "<leader>e", ":Ex<CR>", {
+  desc = "Open file explorer",
+})
+
+-- 💾 Save file (Space + W)
+keymap("n", "<leader>w", ":w<CR>", {
+  desc = "Save file",
+})
+
+-- 💾 Save file (⌘S)
+-- 🧠 Why do I have *two* save keymaps?
+-- - <leader>w is universal: Works on any system, any keyboard layout, even in terminal-only environments (like my VM).
+-- - <D-s> is macOS-specific: Lets me use familiar ⌘S muscle memory when editing locally on my Mac.
+-- - Both do the same thing: save the file!
+-- ✅ This setup lets me keep my habits (⌘S) *and* stay portable (Space + W) across systems.
+keymap("n", "<D-s>", ":w<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Save file (Cmd+S)",
+})
+
+-- 📋 Paste from system clipboard (⌘V)
+keymap("n", "<D-v>", '"+p', {
+  noremap = true,
+  silent = true,
+  desc = "Paste from system clipboard (Cmd+V)",
+})
+
+-- ========================================
+-- ✨ VISUAL MODE KEYBINDINGS
+-- ========================================
+
+-- 📄 Copy selection to system clipboard (⌘C)
+keymap("v", "<D-c>", '"+y', {
+  noremap = true,
+  silent = true,
+  desc = "Copy to system clipboard (Cmd+C)",
+})
+
+-- ========================================
+-- ✍ INSERT MODE KEYBINDINGS
+-- ========================================
+
+-- 📋 Paste from clipboard (⌘V)
+-- This exits insert mode, pastes, and re-enters insert mode
+keymap("i", "<D-v>", '<Esc>"+pa', {
+  noremap = true,
+  silent = true,
+  desc = "Paste from clipboard (Cmd+V)",
+})
