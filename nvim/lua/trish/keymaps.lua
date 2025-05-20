@@ -29,7 +29,7 @@ local keymap = vim.keymap.set
 -- ":Ex<CR>": is the command to open netrw (the file explorer) and "press Enter"
 -- -------- The 'desc' helps tools like 'which-key' show what the shortcut does
 
--- 🗂 Open file explorer (netrw)
+-- 🗂 Open file explorer (Space + E)
 keymap("n", "<leader>e", ":Ex<CR>", {
   desc = "Open file explorer",
 })
@@ -56,6 +56,20 @@ keymap("n", "<D-v>", '"+p', {
   noremap = true,
   silent = true,
   desc = "Paste from system clipboard (Cmd+V)",
+})
+
+-- Select All (⌘A)
+keymap("n", "<D-a>", "ggVG", {
+    noremap = true,
+    silent = true,
+    desc = "Select all (cmd+A)",
+})
+
+-- 📄 Copy current line (⌘C) in normal mode
+keymap("n", "<D-c>", '"+yy', {
+  noremap = true,
+  silent = true,
+  desc = "Copy current line (Cmd+C)",
 })
 
 -- ========================================
