@@ -26,3 +26,17 @@ vim.opt.wrap = false
 
 -- Enable true color support (for better theme compatibility in supported terminals)
 vim.opt.termguicolors = true
+
+-- Highlight the line under the cursor (great for keeping visual track of where you are)
+vim.opt.cursorline = true
+
+-- Use the system clipboard for all yank, delete, change, and put operations
+-- This means you can copy between Neovim and other macOS apps like Safari or Notes seamlessly
+vim.opt.clipboard = "unnamedplus"
+
+-- Make searches case-insensitive by default (`/hello` matches `Hello`, `HELLO`, etc.)
+vim.opt.ignorecase = true
+
+-- ...but if your search includes an uppercase letter, make it case-sensitive
+-- This smart combo lets you stay lazy *or* precise depending on how you type (`/Hello` only matches `Hello`)
+vim.opt.smartcase = true
