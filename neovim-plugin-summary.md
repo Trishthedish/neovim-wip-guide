@@ -132,6 +132,48 @@ No default keymaps required — it listens automatically.
 
 ---
 
+##  🧼 Formatting
+
+### 🪄 [`stevearc/conform.nvim`](https://github.com/stevearc/conform.nvim)
+**What it does**: lightweight formatter plugin that runs external formatters like `black`, `prettier`, etc.
+
+**Why I use it**: It’s dead simple, fast, and doesn’t mess with LSP formatting. It gives me full control.
+
+💡 Typical behavior:
+- Autoformats on save
+- Can be triggered manually too
+
+**Setup**:
+```lua
+-- lua/trish/plugins.lua
+{
+  "stevearc/conform.nvim",
+  config = function()
+    require("conform").setup({
+      format_on_save = {
+        lsp_fallback = true,
+        timeout_ms = 500,
+      },
+      formatters_by_ft = {
+        python = { "black" }, -- Add more as needed
+      },
+    })
+  end,
+}
+```
+
+### [`black`](https://black.readthedocs.io/en/stable/#) — Python’s opinionated formatter 🐍
+**What it does**: Reformats Python files to match a consistent style guide — great for keeping things clean and readable.
+
+🧠 **Why we use it**: It enforces standards automatically. It’s fast, unambiguous, and basically the standard in Pythonland.
+
+⚙️ **Install it** globally or in your venv:
+```sh
+pip install black
+```
+
+---
+
 ## ✅ Final Notes
 
 - All plugins are **lazy-loaded** unless marked `lazy = false`
