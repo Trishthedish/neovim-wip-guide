@@ -15,3 +15,6 @@ require("trish.keymaps")
 
 -- 💡 Load plugins using lazy.nvim
 require("lazy").setup(require("trish.plugins"))
+
+-- 🧠 Load LSP configs (language-specific setups)
+require("trish.lsp")
