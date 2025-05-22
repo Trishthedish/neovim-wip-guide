@@ -94,3 +94,36 @@ keymap("i", "<D-v>", '<Esc>"+pa', {
   silent = true,
   desc = "Paste from clipboard (Cmd+V)",
 })
+
+-- ========================================
+-- 🔭 Telescope keymaps
+-- ========================================
+
+-- 🧠 Why use `require("telescope.builtin")` inside a function?
+-- - This is a lazy load pattern: the require call only runs when the key is pressed.
+-- - It prevents errors if Telescope isn't loaded yet during startup.
+-- - Ideal for beginner-friendly configs where plugin loading order can vary.
+
+-- 📁 Find files in your project (Space + f + f)
+keymap("n", "<leader>ff",
+  function() require("telescope.builtin").find_files() end,
+  { desc = "Telescope: Find files" }
+)
+
+-- 🔍 Grep text live in your project (Space + f + g)
+keymap("n", "<leader>fg",
+  function() require("telescope.builtin").live_grep() end,
+  { desc = "Telescope: Live grep" }
+)
+
+-- 📑 Switch between open buffers (Space + f + b)
+keymap("n", "<leader>fb",
+  function() require("builtin.buffers").buffers() end,
+  { desc = "Telescope: List buffers" }
+)
+
+-- 📚 Browse Neovim's built-in help docs (Space + f + h)
+keymap("n", "<leader>fh",
+  function() require("builtin.help_tags").help_tags() end,
+  { desc = "Telescope: Help tags" }
+)
