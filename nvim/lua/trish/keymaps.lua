@@ -29,7 +29,7 @@ local keymap = vim.keymap.set
 -- ":Ex<CR>": is the command to open netrw (the file explorer) and "press Enter"
 -- -------- The 'desc' helps tools like 'which-key' show what the shortcut does
 
--- 🗂 Open file explorer (Space + E)
+-- 🗂 Open file explorer (Space + e)
 keymap("n", "<leader>e", ":Ex<CR>", {
   desc = "Open file explorer",
 })
@@ -65,11 +65,30 @@ keymap("n", "<D-a>", "ggVG", {
     desc = "Select all (cmd+A)",
 })
 
--- 📄 Copy current line (⌘C) in normal mode
+-- 📄 Copy current line (⌘C in normal mode)
 keymap("n", "<D-c>", '"+yy', {
   noremap = true,
   silent = true,
   desc = "Copy current line (Cmd+C)",
+})
+
+-- 📋 Copy entire buffer WITHOUT line numbers (Space + y + n)
+keymap("n", "<leader>yn", function()
+  vim.opt.number = false
+  vim.opt.relativenumber = false
+  vim.cmd('normal! ggVG"+y')
+  vim.opt.number = true
+  vim.opt.relativenumber = true
+end, {
+  desc = "Copy whole buffer without line numbers",
+})
+
+-- 📋 Copy entire buffer WITH visible line numbers (Space + y + l)
+keymap("n", "<leader>yl", function()
+  vim.cmd('set number relativenumber') -- make sure numbers are visible
+  vim.cmd('normal! ggVG"+y')
+end, {
+  desc = "Copy whole buffer with line numbers",
 })
 
 -- ========================================
