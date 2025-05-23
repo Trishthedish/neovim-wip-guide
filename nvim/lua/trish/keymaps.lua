@@ -137,12 +137,12 @@ keymap("n", "<leader>fg",
 
 -- 📑 Switch between open buffers (Space + f + b)
 keymap("n", "<leader>fb",
-  function() require("builtin.buffers").buffers() end,
+  function() require("telescope.builtin").buffers() end,
   { desc = "Telescope: List buffers" }
 )
 
 -- 📚 Browse Neovim's built-in help docs (Space + f + h)
 keymap("n", "<leader>fh",
-  function() require("builtin.help_tags").help_tags() end,
+  function() require("telescope.builtin").help_tags() end,
   { desc = "Telescope: Help tags" }
 )
