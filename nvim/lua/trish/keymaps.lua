@@ -84,6 +84,13 @@ end, {
   desc = "Copy whole buffer with line numbers",
 })
 
+-- ✂️ Trim trailing whitespace manually (Space + t + w)
+keymap("n", "<leader>tw", "<cmd>TrimWhitespace<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Trim trailing whitespace manually",
+})
+
 -- ========================================
 -- ✨ VISUAL MODE KEYBINDINGS
 -- ========================================
