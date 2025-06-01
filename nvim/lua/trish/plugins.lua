@@ -12,6 +12,60 @@ return {
 },
 
 {
+  "lukas-reineke/indent-blankline.nvim",
+  main = "ibl", -- uses the modern module name
+  ---@module "ibl" -- (optional) tells Lazy to use the "ibl" module instead of default
+  ---@type ibl.config -- (optional hint for Lua LSP, more on this below)
+  config = function()
+    local opts = {
+      indent = {
+        char = "┊", -- or "▏", "⎸", "┊"
+        highlight = {
+          "RainbowRed",
+          "RainbowYellow",
+          "RainbowBlue",
+          "RainbowOrange",
+          "RainbowGreen",
+          "RainbowViolet",
+          "RainbowCyan",
+        },
+      },
+      whitespace = {
+        remove_blankline_trail = false, --keep trailing whitespace visible
+      },
+      exclude = {
+        filetypes = {
+          "help",
+          "dashboard",
+          "NvimTree",
+          "Trouble",
+          "lazy",
+          "mason",
+        }
+      },
+      scope = {
+        enabled = false,
+      },
+    }
+
+    -- 🌈 Define the custom highlights
+    vim.api.nvim_set_hl(0, "RainbowRed",    { fg = "#E06C75" })
+    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+    vim.api.nvim_set_hl(0, "RainbowBlue",   { fg = "#61AFEF" })
+    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+    vim.api.nvim_set_hl(0, "RainbowGreen",  { fg = "#98C379" })
+    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+    vim.api.nvim_set_hl(0, "RainbowCyan",   { fg = "#56B6C2" })
+
+    -- 🧽 Define highlight group used by autocmds
+    vim.api.nvim_set_hl(0, "ExtraWhitespace", { bg = "#FF00FF" })
+
+    -- ✅ Finally call setup just once
+    require("ibl").setup(opts)
+  end,
+},
+
+{
   "folke/tokyonight.nvim", -- Beautiful color theme
   lazy = false, -- Load immediately at startup
   priority = 1000, -- Load before anything else
