@@ -34,21 +34,14 @@ keymap("n", "<leader>e", ":Ex<CR>", {
   desc = "Open file explorer",
 })
 
--- 💾 Save file (Space + W)
-keymap("n", "<leader>w", ":w<CR>", {
-  desc = "Save file",
-})
-
--- 💾 Save file (⌘S)
--- 🧠 Why do I have *two* save keymaps?
--- - <leader>w is universal: Works on any system, any keyboard layout, even in terminal-only environments (like my VM).
--- - <D-s> is macOS-specific: Lets me use familiar ⌘S muscle memory when editing locally on my Mac.
--- - Both do the same thing: save the file!
--- ✅ This setup lets me keep my habits (⌘S) *and* stay portable (Space + W) across systems.
-keymap("n", "<D-s>", ":w<CR>", {
+-- 💾 Save file with feedback (Space + w)
+vim.keymap.set("n", "<leader>w", function()
+  print("🔧 Save function triggered!")
+  vim.cmd("w")
+  vim.api.nvim_echo({{"💾 File saved with Space+w!", "Normal"}}, false, {})
+end, {
   noremap = true,
-  silent = true,
-  desc = "Save file (Cmd+S)",
+  desc = "Save file with feedback",
 })
 
 -- 📋 Paste from system clipboard (⌘V)
