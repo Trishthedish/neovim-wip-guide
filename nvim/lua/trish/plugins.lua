@@ -41,6 +41,7 @@ return {
           "Trouble",
           "lazy",
           "mason",
+          "lualine"
         }
       },
       scope = {
