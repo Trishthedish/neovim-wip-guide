@@ -79,6 +79,21 @@ return {
   lazy = true,
 },
 
+{
+  -- ✨ nvim-autopairs auto-inserts matching brackets, quotes
+  -- and parentheses as you type — just like VS Code.
+  -- Smart, simple, and integrates well with completions.
+  "windwp/nvim-autopairs",
+  event = "InsertEnter",
+  config = function()
+    require("nvim-autopairs").setup({
+      check_ts = true,        -- ✅ enables Treesitter checks for better context awareness (smart pairing in quotes/strings)
+      enable_check_bracket_line = false, -- 🚫 disables strict "same line" bracket pairing
+      disable_filetype = { "TelescopePrompt", "vim" }, -- 🙅 avoids pairing in Telescope or Vimscript files
+      ignored_next_char = "[%w%.]", -- ❌ won't add closing pair if the next character is a word character or period
+    })
+  end,
+},
 -- ┌────────────────────────────────────┐
 -- │ 🔍 Navigation & Search             │
 -- └────────────────────────────────────┘
