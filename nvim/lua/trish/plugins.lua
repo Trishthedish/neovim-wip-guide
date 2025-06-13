@@ -189,10 +189,12 @@ return {
 -- │ 🔧 Utilities                       │
 -- └────────────────────────────────────┘
 {
-  "folke/which-key.nvim", -- Popup to show possible keybindings
-  config = function()
-    require("which-key").setup()
-  end,
+  "folke/which-key.nvim",
+   event = "VeryLazy",
+   opts = {
+    presets = "modern",
+    plugins = {spelling = {enabled = true} },
+    win = { border = "rounded", title = true, },
+  },
 },
-
 }
