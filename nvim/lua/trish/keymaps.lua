@@ -146,3 +146,9 @@ keymap("n", "<leader>fh",
   function() require("telescope.builtin").help_tags() end,
   { desc = "Telescope: Help tags" }
 )
+
+-- ❓ Search all active keybindings (Space + ?)
+keymap("n", "<leader>?",
+  function() require("telescope.builtin").keymaps() end,
+  { desc = "Telescope: 🔍 Search all keymaps"}
+)
