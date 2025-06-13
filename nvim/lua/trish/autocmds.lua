@@ -1,11 +1,28 @@
 -- nvim/lua/trish/autocmds.lua
--- When a buffer window is opened, highlight any trailing whitespace at the end of lines
--- using the 'ExtraWhitespace' highlight group (which should be defined elsewhere).
--- This helps visually spot and clean up unnecessary whitespace.
-vim.api.nvim_create_autocmd("BufWinEnter", {
+-- Highlight trailing whitespace in active buffers using the 'ExtraWhitespace'
+-- highlight group, unless the filetype is in the excluded list. This helps
+-- visually spot accidental trailing spaces before saving or committing changes.
+vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   callback = function()
-    vim.cmd([[match ExtraWhitespace /\s\+$/]])
+    local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
+    local buftype = vim.api.nvim_get_option_value("buftype", { buf = 0 })
+
+    local exclude = {
+      help = true,
+      dashboard = true,
+      NvimTree = true,
+      Lazy = true,
+      lazy = true,
+      lualine = true,
+    }
+
+    -- 🛑 Disable highlight in special buffers
+    if buftype ~= "" or exclude[filetype] then
+      vim.cmd([[match none]])
+    else
+      vim.cmd([[match ExtraWhitespace /\s\+$/]])
+    end
   end,
 })
 
