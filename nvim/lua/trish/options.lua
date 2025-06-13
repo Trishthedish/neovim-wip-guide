@@ -40,3 +40,9 @@ vim.opt.ignorecase = true
 -- ...but if your search includes an uppercase letter, make it case-sensitive
 -- This smart combo lets you stay lazy *or* precise depending on how you type (`/Hello` only matches `Hello`)
 vim.opt.smartcase = true
+
+-- Copy indent from current line when starting a new line
+vim.opt.autoindent = true
+
+-- Makes <Tab> insert the correct number of spaces
+vim.opt.smarttab = true
