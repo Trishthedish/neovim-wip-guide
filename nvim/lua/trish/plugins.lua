@@ -38,7 +38,6 @@ return {
           "help",
           "dashboard",
           "NvimTree",
-          "Trouble",
           "lazy",
           "mason",
           "lualine"
