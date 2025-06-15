@@ -152,3 +152,60 @@ keymap("n", "<leader>?",
   function() require("telescope.builtin").keymaps() end,
   { desc = "Telescope: 🔍 Search all keymaps"}
 )
+
+-- ========================================
+-- 🧭 Harpoon 2 Keybindings
+-- ========================================
+
+-- Add current file to Harpoon list (Space + a)
+keymap("n", "<leader>a",
+  function()
+    local harpoon = require("harpoon")
+    harpoon:list():append()
+  end,
+  { desc = "Harpoon: Add file" }
+)
+
+-- Remove current file from Harpoon list (Space + d)
+keymap("n", "<leader>d",
+  function()
+    require("harpoon"):list():remove()
+  end,
+  { desc = "Harpoon: Remove current file" }
+)
+
+-- Toggle Harpoon menu UI (Space + h)
+keymap("n", "<leader>h",
+  function()
+    local harpoon = require("harpoon")
+    harpoon.ui:toggle_quick_menu(harpoon:list())
+  end,
+  { desc = "Harpoon: Toggle menu" }
+)
+
+-- Jump to directly to Harpoon file 1–5 (Space + 1 - 5)
+for i = 1, 5 do
+  keymap("n", "<leader>" .. i,
+    function()
+      local harpoon = require("harpoon")
+      harpoon:list():select(i)
+   end,
+   { desc = "Harpoon: Go to file " .. i }
+)
+end
+
+  -- Go to next Harpoon file (Space + j)
+keymap("n", "<leader>j",
+  function()
+    require("harpoon"):list():next()
+  end,
+  { desc = "Harpoon: Next file" }
+)
+
+-- Go to previous Harpoon file (Space + k)
+keymap("n", "<leader>k",
+  function()
+    require("harpoon"):list():prev()
+  end,
+  { desc = "Harpoon: Previous file" }
+)
