@@ -105,6 +105,29 @@ return {
   end,
 },
 
+  -- Harpoon (by ThePrimeagen) is a fast file marking and navigation plugin.
+  -- It lets you mark frequently-used files and quickly jump between them,
+  -- providing a lightweight, persistent workspace feel inside Neovim.
+{
+  "ThePrimeagen/harpoon",
+  branch = "harpoon2", -- optional: only if you want the newer version
+  dependencies = { "nvim-lua/plenary.nvim" },
+  config = function()
+    require("harpoon").setup({
+      settings = {
+        save_on_toggle = true, -- auto-save your list when opening
+        sync_on_ui_close = true, -- auto-sync when closing UI
+      },
+      ui = {
+        -- this controls how each item is shown in the quick menu
+        transform_fn = function(item)
+          return item.label and item.label .. " → " .. item.value or item.value
+        end,
+      },
+    })
+  end,
+},
+
 -- ┌────────────────────────────────────┐
 -- │ 🧠 LSP                             │
 -- └────────────────────────────────────┘
