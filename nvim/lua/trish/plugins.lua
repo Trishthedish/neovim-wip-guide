@@ -188,13 +188,82 @@ return {
 -- │ 🤖 Autocompletion                  │
 -- └────────────────────────────────────┘
 {
-  "hrsh7th/nvim-cmp", -- Completion plugin
+  "hrsh7th/nvim-cmp", -- Completion plugin (shows suggestions as you type)
   dependencies = {
     "hrsh7th/cmp-nvim-lsp", -- Completion from LSP
-    "L3MON4D3/LuaSnip", -- Snippet engine
+    {
+      "L3MON4D3/LuaSnip", -- Snippet engine
+      version = "v2.*", -- Follow latest v2 release
+      build = "make install_jsregexp", -- This will install jsregexp automatically
+      config = function()
+        -- Load your custom Lua snippets
+        require("luasnip.loaders.from_lua").load({
+          paths = "~/.config/nvim/lua/trish/snippets"
+        })
+      end,
+    },
   },
   config = function()
-    -- You can add your cmp setup here later
+    -- nvim-cmp = "completion engine" - handles autocomplete suggestions
+    -- luasnip = "snippet engine" - handles snippet expansion and navigation
+    local cmp = require("cmp")
+    local luasnip = require("luasnip")
+    cmp.setup({
+      -- 📝 SNIPPET EXPANSION: How to turn snippet text into actual code
+      snippet = {
+        expand = function(args)
+          -- When user selects a snippet from completion menu,
+          -- hand the snippet body to LuaSnip to expand it
+          luasnip.lsp_expand(args.body)
+        end,
+      },
+      -- ⌨️ KEYMAPS: What keys do what during completion
+      mapping = cmp.mapping.preset.insert({
+        -- 📖 Documentation scrolling (when completion docs are visible)
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),  -- (Ctrl + b): Scroll up in docs
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),   -- (Ctrl + f): Scroll down in docs
+
+        -- 🔍 Completion control
+        ["<C-Space>"] = cmp.mapping.complete(), -- (Ctrl + Space): Force show completions
+        ["<C-e>"] = cmp.mapping.abort(),        -- (Ctrl + e): Close completion menu
+        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- (Enter): Accept current selection
+
+        -- 🎯 SMART TAB: The key that makes snippets work!
+        -- Tab does different things depending on what's happening:
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            -- Completion menu is open → navigate to next suggestion
+            cmp.select_next_item()
+          elseif luasnip.expand_or_jumpable() then
+            -- Can expand a snippet (like "leet") OR jump to next placeholder → do it
+            luasnip.expand_or_jump()
+          else
+            -- Nothing special happening → just insert a normal tab
+            fallback()
+          end
+        end, { "i", "s" }), -- Works in insert mode ("i") and select mode ("s")
+
+        -- 🔄 SHIFT-TAB: Reverse navigation
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            -- Completion menu is open → navigate to previous suggestion
+            cmp.select_previous_item()
+          elseif luasnip.jumpable(-1) then
+            -- Can jump to previous snippet placeholder → do it
+            luasnip.jump(-1)
+          else
+            -- Nothing special → normal Shift-Tab behavior
+            fallback()
+          end
+        end, { "i", "s" }),
+      }),
+
+      -- 🔍 COMPLETION SOURCES: Where do suggestions come from?
+      sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "luasnip" }, -- For snippets
+      }),
+    })
   end,
 },
 
