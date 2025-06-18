@@ -209,3 +209,19 @@ keymap("n", "<leader>k",
   end,
   { desc = "Harpoon: Previous file" }
 )
+
+-- 🪄 Open Harpoon file in horizontal/vertical splits (Space + oh/ov + 1–5)
+for i = 1, 5 do
+
+    -- Horizontal split
+    keymap("n", "<leader>oh" .. i, function()
+        vim.cmd("split")
+        require("harpoon"):list():select(i)
+    end, { desc = "Harpoon: Open horizontal split file " .. i })
+
+    -- Vertical split
+    keymap("n", "<leader>ov" .. i, function()
+        vim.cmd("vsplit")
+        require("harpoon"):list():select(i)
+    end, { desc = "Harpoon: Open vertical split file " .. i })
+end
