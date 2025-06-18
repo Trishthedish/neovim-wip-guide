@@ -292,7 +292,50 @@ return {
 {
   "lewis6991/gitsigns.nvim", -- Show git changes in the sign column
   config = function()
-    require("gitsigns").setup()
+    require("gitsigns").setup({
+      attach_to_untracked = true,
+      signs = {
+        add = { text = "█"},
+        change = { text = "█" },
+        delete = { text = "_" },
+        topdelete = { text = "‾" },
+        changedelete = { text = "~" },
+      },
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+        local map = function(mode, l, r, desc)
+          vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
+        end
+
+        map("n", "<leader>gp", gs.preview_hunk, "Preview git hunk")
+        map("n", "<leader>gb", gs.toggle_current_line_blame, "Toggle git line blame")
+      end,
+    })
+
+
+    -- Set VS Code-like git diff colors
+    -- These colors match VS Code's default git gutter colors
+    vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#28a745" })          -- Green for additions
+    vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#ffa500" })       -- Orange for changes
+    vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#d73a49" })       -- Red for deletions
+    vim.api.nvim_set_hl(0, "GitSignsTopdelete", { fg = "#d73a49" })    -- Red for top deletions
+    vim.api.nvim_set_hl(0, "GitSignsChangedelete", { fg = "#ffa500" }) -- Orange for change+delete
+
+    -- Optional: Set background colors for line highlighting (when you navigate to hunks)
+    vim.api.nvim_set_hl(0, "GitSignsAddLn", { bg = "#e6ffed" })      -- Light green background
+    vim.api.nvim_set_hl(0, "GitSignsChangeLn", { bg = "#fff8e1" })   -- Light orange background
+    vim.api.nvim_set_hl(0, "GitSignsDeleteLn", { bg = "#ffeef0" })   -- Light red background
+
+    -- Optional: Inline word diff colors (for preview_hunk)
+    vim.api.nvim_set_hl(0, "GitSignsAddInline", { bg = "#acf2bd" })    -- Light green highlight for added words/chars
+    vim.api.nvim_set_hl(0, "GitSignsDeleteInline", { bg = "#fdb8c0" }) -- Light red highlight for deleted words/chars
+    vim.api.nvim_set_hl(0, "GitSignsChangeInline", { bg = "#ffe4b3" }) -- Light orange highlight for changed words/chars
+
+     -- Override diff colors for preview window to match VS Code
+    vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#e6ffed", fg = "#28a745" })
+    vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#ffeef0", fg = "#d73a49" })
+    vim.api.nvim_set_hl(0, "DiffChange", { bg = "#fff8e1", fg = "#ffa500" })
+    vim.api.nvim_set_hl(0, "DiffText", { bg = "#ffe4b3", fg = "#ffa500", bold = true })
   end,
 },
 
