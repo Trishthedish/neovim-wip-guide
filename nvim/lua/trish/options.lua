@@ -46,3 +46,7 @@ vim.opt.termguicolors = true
 
 -- Disable automatic line wrapping — long lines will overflow horizontally
 vim.opt.wrap = false
+
+--Display winbar with centered filename and modified indicator
+-- %m shows [+] when file has unsaved changes, %f shows full file path
+vim.opt.winbar = " %=%m  %f%= "
