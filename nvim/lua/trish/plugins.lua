@@ -66,10 +66,29 @@ return {
 },
 
 {
-  "folke/tokyonight.nvim", -- Beautiful color theme
-  lazy = false, -- Load immediately at startup
-  priority = 1000, -- Load before anything else
+  "folke/tokyonight.nvim", -- Tokyo Night: Modern dark theme with vibrant colors
+  -- Plugin loading behavior
+  lazy = false,    -- Load immediately during startup (not lazy-loaded)
+  priority = 1000, -- High priority ensures colorscheme loads before other plugins
+
   config = function()
+    -- Configure Tokyo Night theme customizations
+    require("tokyonight").setup({
+      on_highlights = function(hl, c)
+        -- Customize cursor line appearance
+        hl.CursorLine = {
+          fg = "NONE",   -- Keep default text color (commented out)
+        }
+
+        -- Enhance comment visibility and styling
+        hl.Comment = {
+          fg = "#8888aa", -- Custom blue-gray color (brighter than default)
+          italic = true,  -- Make comments italic for better distinction
+        }
+      end,
+    })
+
+    -- Apply the colorscheme after configuration
     vim.cmd.colorscheme("tokyonight")
   end,
 },
