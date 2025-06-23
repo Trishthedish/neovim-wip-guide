@@ -153,6 +153,50 @@ keymap("n", "<leader>?",
   { desc = "Telescope: 🔍 Search all keymaps"}
 )
 
+-- Search files in current buffer's directory
+-- Usage: <leader>fc - fuzzy find files starting from current file's folder
+vim.keymap.set('n', '<leader>fc', function()
+  -- Check if there's a file in the current buffer
+  -- '%:p' gets the full path of current buffer's file
+  local current_file = vim.fn.expand('%:p')
+  if current_file == '' then
+    -- If no file in buffer (empty buffer, help files, etc.),
+    -- search in current working directory
+    local cwd = vim.fn.getcwd()
+    require('telescope.builtin').find_files({
+      cwd = cwd,
+      -- ':t' gets just the tail/basename of the path for cleaner title
+      prompt_title = "Find Files in " .. vim.fn.fnamemodify(cwd, ':t')
+    })
+    return
+  end
+
+  -- Gets the directory of the current file (':h' = head/directory part)
+local current_dir = vim.fn.fnamemodify(current_file, ':h')
+  require('telescope.builtin').find_files({
+    cwd = current_dir, -- Start search from this directory instead of project root
+    prompt_title = "Find Files in " .. vim.fn.fnamemodify(current_dir, ':t'),
+    -- Show hidden files in serach (dotfiles like .bashrc, .config/, etc.)
+    hidden = true,
+    -- But, respect exclude files that are in .gitignore (.env, .DS_Store, etc.)
+    respect_gitignore = true
+  })
+end, { desc = "Find files in current buffer's directory" })
+
+-- Alternative: Live grep in current buffer's directory
+vim.keymap.set('n', '<leader>gc', function()
+  local current_file = vim.fn.expand('%:p')
+  if current_file == '' then
+    print("No file in current buffer")
+    return
+  end
+  local current_dir = vim.fn.fnamemodify(current_file, ':h')
+  require('telescope.builtin').live_grep({
+    cwd = current_dir,
+    prompt_title = "Live Grep in " .. vim.fn.fnamemodify(current_dir, ':t')
+  })
+end, { desc = "Live grep in current buffer's directory" })
+
 -- ========================================
 -- 🧭 Harpoon 2 Keybindings
 -- ========================================
