@@ -152,6 +152,10 @@ return {
 -- └────────────────────────────────────┘
 {
   "neovim/nvim-lspconfig", -- Collection of LSP configs
+  config = function()
+  -- load master LSP configuration
+    require("trish.lsp.init")
+  end,
 },
 
 -- ┌────────────────────────────────────┐
