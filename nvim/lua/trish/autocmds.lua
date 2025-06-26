@@ -34,3 +34,49 @@ end
 
 -- Create a user command :TrimWhitespace to run it manually
 vim.api.nvim_create_user_command("TrimWhitespace", remove_trailing_whitespace, {})
+
+-- Set Lua-specific indentation rules when editing Lua files.
+-- This ensures consistent formatting aligned with common Lua style guides:
+-- - 2 spaces per indent level
+-- - Tabs are replaced with spaces
+-- - Smart indentation is enabled for language-aware structure like functions and blocks
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "lua", -- Trigger only for Lua filetypes
+  desc = "Set Lua-specific indentation settings",
+  callback = function()
+    vim.bo.shiftwidth = 2       -- Use 2 spaces per indentation level when indenting with >> or <<
+    vim.bo.tabstop = 2          -- A tab character appears as 2 spaces
+    vim.bo.softtabstop = 2      -- Insert 2 spaces when pressing <Tab> in insert mode
+    vim.bo.expandtab = true     -- Convert all tabs to spaces (for consistency)
+    vim.bo.autoindent = true    -- Copy indentation from the previous line when starting a new one
+    vim.bo.smartindent = true   -- Automatically add extra indentation for control structures (if, function, etc.)
+  end,
+})
+
+-- Set Python-specific indentation rules when editing Python files.
+-- This enforces common Python style guide (PEP 8) conventions:
+-- - 4 spaces per indentation level (preferred over tabs)
+-- - Tabs are replaced with spaces to avoid formatting inconsistencies
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python", -- Trigger only for Python files
+  desc = "Set Python-specific indentation settings",
+  callback = function()
+    vim.opt_local.shiftwidth = 4   -- 4 spaces for each level of indentation
+    vim.opt_local.tabstop = 4      -- A tab character appears as 4 spaces
+    vim.opt_local.expandtab = true -- Use spaces instead of tab characters
+  end,
+})
+
+-- Set JS/TS-specific indentation rules for consistent frontend code style.
+-- These settings align with common community standards (like Prettier, ESLint):
+-- - 2 spaces per indentation level
+-- - Tabs are replaced with spaces for cross-editor consistency
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "javascript,typescript", -- Trigger for both JavaScript and TypeScript files
+  desc = "Set JavaScript/TypeScript-specific indentation settings",
+  callback = function()
+    vim.opt_local.shiftwidth = 2   -- 2 spaces for each level of indentation
+    vim.opt_local.tabstop = 2      -- A tab character appears as 2 spaces
+    vim.opt_local.expandtab = true -- Use spaces instead of tab characters
+  end,
+})
