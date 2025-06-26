@@ -7,7 +7,58 @@ return {
 {
   "nvim-lualine/lualine.nvim", -- Statusline at the bottom
   config = function()
-    require("lualine").setup()
+    require("lualine").setup({
+    options = {
+      ignore_focus = {},
+      always_divide_middle = true,
+      globalstatus = false,
+      refresh = {
+        statusline = 1000,
+        tabline = 1000,
+        winbar = 1000,
+      }
+    },
+    sections = {
+      -- left side
+      lualine_a = {'mode'},
+      lualine_b = {
+        'branch',
+        {
+          'diff',
+           colored = true,
+           symbols = {
+             added = " ",
+             modified = " ",
+             removed = " ",
+           }
+        },
+      },
+        -- Center (filename)
+        lualine_c = {
+          {
+            'filename',
+            file_status = true,    -- Shows [+] for modified, [-] for readonly
+            path = 1,              -- Show relative path
+            symbols = {
+              modified = '[+]',
+              readonly = '[-]',
+              unnamed = '[No Name]',
+            }
+          }
+        },
+        -- Right side
+        lualine_x = {
+          {
+            'diagnostics',
+            sources = { 'nvim_lsp' },
+            symbols = {error = '', warn = '', info = '', hint = ''},
+          },
+          'filetype'  -- This shows language with icon (lua , js , py  etc.)
+        },
+        lualine_y = {'progress'},
+        lualine_z = {'location'}
+      }
+    })
   end,
 },
 
