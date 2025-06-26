@@ -269,3 +269,89 @@ for i = 1, 5 do
         require("harpoon"):list():select(i)
     end, { desc = "Harpoon: Open vertical split file " .. i })
 end
+
+-- ========================================
+-- 🌿 Git Operations with Gitsigns
+-- ========================================
+
+-- Navigate between git hunks (changes) --
+
+-- Navigate to next hunk
+keymap("n", "<C-j>", function()
+  require("gitsigns").next_hunk()
+end, { desc = "Next git hunk" })
+
+-- Navigate to previous hunk
+keymap("n", "<C-k>", function()
+  require("gitsigns").prev_hunk()
+end, { desc = "Previous git hunk" })
+
+-- Stage/unstage hunks (chunks) --
+
+-- Stage current hunk (add to commit)
+keymap("n", "<leader>gs", function()
+  require("gitsigns").stage_hunk()
+end, { desc = "Stage hunk" })
+
+-- Undo staging of current hunk (remove from commit)
+keymap("n", "<leader>gu", function()
+  require("gitsigns").undo_stage_hunk()
+end, { desc = "Undo stage hunk" })
+
+-- ⚠️ Reset hunk (permanently delete changes)
+keymap("n", "<leader>gr", function()
+  require("gitsigns").reset_hunk()
+end, { desc = "Reset hunk" })
+
+-- Stage/unstage visual selection --
+
+-- Stage only the visually selected lines
+keymap("v", "<leader>gs", function()
+  require("gitsigns").stage_hunk({vim.fn.line("."), vim.fn.line("v")})
+end, { desc = "Stage selected lines" })
+
+-- Unstage only the visually selected lines
+keymap("v", "<leader>gu", function()
+  require("gitsigns").undo_stage_hunk({vim.fn.line("."), vim.fn.line("v")})
+end, { desc = "Undo stage selected lines" })
+
+-- ⚠️ Reset only the visually selected lines (delete those changes)
+keymap("v", "<leader>gr", function()
+  require("gitsigns").reset_hunk({vim.fn.line("."), vim.fn.line("v")})
+end, { desc = "Reset selected lines" })
+
+-- Stage/reset entire file --
+
+-- Stage all changes in the current file
+keymap("n", "<leader>gss", function()
+  require("gitsigns").stage_buffer()
+end, { desc = "Stage entire file" })
+
+-- ⚠️ Reset all changes in the current file (delete all changes)
+keymap("n", "<leader>grr", function()
+  require("gitsigns").reset_buffer()
+end, { desc = "Reset entire file" })
+
+-- Preview and inspection --
+
+-- Show popup preview of what changed in current hunk
+keymap("n", "<leader>gp", function()
+  require("gitsigns").preview_hunk()
+end, { desc = "Preview hunk" })
+
+-- Show/hide git blame info next to each line
+keymap("n", "<leader>gb", function()
+  require("gitsigns").toggle_current_line_blame()
+end, { desc = "Toggle line blame" })
+
+-- Preview and inspection --
+
+-- Show side-by-side diff of current file vs last commit
+keymap("n", "<leader>gd", function()
+  require("gitsigns").diffthis()
+end, { desc = "Diff this file" })
+
+-- Show/hide git blame info next to eachdd line
+keymap("n", "<leader>gdc", function()
+  require("gitsigns").diffthis("~")
+end, { desc = "Diff this file (cached)" })
