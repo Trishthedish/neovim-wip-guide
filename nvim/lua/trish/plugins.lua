@@ -317,7 +317,8 @@ return {
           end
         end, { "i", "s" }), -- Works in insert mode ("i") and select mode ("s")
 
-        -- 🔄 SHIFT-TAB: Reverse navigation
+        -- 🔄 SHIFT-TAB: Reverse navigatin
+        --  Move backward through snippet placeholders (or previous autocomplete item)
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             -- Completion menu is open → navigate to previous suggestion
