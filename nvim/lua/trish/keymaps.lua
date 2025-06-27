@@ -91,6 +91,13 @@ keymap("n", "<leader>tw", "<cmd>TrimWhitespace<CR>", {
   desc = "Trim trailing whitespace manually",
 })
 
+-- 📐 Cycle through indent guide settings (Space + t + i)
+-- Cycles through: rainbow_dashed → rainbow_continuous → gray_simple → repeat
+-- Useful for adjusting visual indentation cues based on current coding context
+keymap('n', '<leader>ti', function()
+  require('plugins.indent-blankline').cycle_indent_guides()
+end, { desc = "Cycle indent guide styles" })
+
 -- ========================================
 -- ✨ VISUAL MODE KEYBINDINGS
 -- ========================================
