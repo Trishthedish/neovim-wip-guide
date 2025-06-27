@@ -16,10 +16,16 @@ require("trish.keymaps")
 -- 2. 💡 Load plugins using lazy.nvim
 require("lazy").setup(require("trish.plugins"))
 
--- 3. 🧠 Load LSP configs (language-specific setups)
+-- 3. 🔧 Load custom plugin configurations
+-- Extracting complex plugins to individual /plugins/ files for better organization
+-- This enables easier customization (e.g., toggling indent-blankline color schemes)
+-- while keeping init.lua clean and maintainable
+require("plugins.indent-blankline")
+
+-- 4. 🧠 Load LSP configs (language-specific setups)
 require("trish.lsp")
 
--- 4. 📌 Custom autocommands for Neovim
+-- 5. 📌 Custom autocommands for Neovim
 -- This file sets up event-driven behaviors, such as:
 --     • Highlighting trailing whitespace on buffer open
 --     • User commands for manual cleanup
