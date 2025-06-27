@@ -331,6 +331,16 @@ return {
             fallback()
           end
         end, { "i", "s" }),
+
+        -- 🔁 Reload Luasnp snippets without restarting Neovim.
+        -- Run `:ReloadSnippets` after editing snippets in
+        -- ~/.config/nvim/lua/trish/snippets
+        vim.api.nvim_create_user_command("ReloadSnippets", function()
+        require("luasnip.loaders.from_lua").load({
+          paths = "~/.config/nvim/trish/snippets",
+        })
+        print("🔁 LuaSnip snippets reloaded!")
+        end, {})
       }),
 
       -- 🔍 COMPLETION SOURCES: Where do suggestions come from?
