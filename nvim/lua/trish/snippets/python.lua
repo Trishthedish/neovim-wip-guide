@@ -152,4 +152,68 @@ class Solution:
     rep(1), rep(2), rep(3),      -- Call for Example 3
   })),
 
+  -- mpsp 2 param snippet code
+  -- Minimum Problem Solving Product
+  s("mpsp_2p)", fmt([[
+"""
+The Problem {}
+-----------------------------
+{}
+"""
+
+# -- 💭 Test Notes --
+# Inputs: {}
+# Expected Output: {}
+
+def run_test({}, {}, expected):
+   def {}(version):
+       return {}             # Mocked API
+
+   class Solution():
+       def {}(self, {}):
+{}
+
+   sol = Solution()
+   result = sol.{}({})
+   print("✅" if result == expected else f"❌ Got " + str(result) + ", expected " + str(expected))
+
+# -- 🔁 Sample Runs
+run_test({}, {}, {})
+run_test({}, {}, {})
+run_test({}, {}, {})
+]], {
+    i(1, "First Bad Version"),                          -- Problem name
+    i(2, "You are given API is_bad_version(version)..."), -- Problem description
+    i(3, "n, first_bad"),                               -- Inputs
+    i(4, "4"),                                          -- Expected Output
+    i(5, "n"),                                          -- run_test param 1:
+    i(6, "first_bad"),                                  -- run_test param 2
+    i(7, "is_bad_version"),                             -- mock function name
+    i(8, "version >= first_bad"),                       -- mock logic
+    i(9, "first_bad_version"),                          -- method name
+    rep(5),                                             -- method param
+    t({                                                 -- Method body
+      "           left, right = 1, n",
+      "           while left < right:",
+      "               mid = left + (right - left) // 2",
+      "               if is_bad_version(mid):",
+      "                   right = mid",
+      "               else:",
+      "                   left = mid + 1",
+      "           return left"
+     }),
+    rep(9),                                             -- method call function
+    rep(5),                                             -- method call param
+    i(10, "5"),                                         -- Sample 1 param 1
+    i(11, "4"),                                         -- Sample 1 param 2
+    i(12, "4"),                                         -- Sample 1 expected
+
+    i(13, "2"),                                         -- Sample 2 param 1
+    i(14, "1"),                                         -- Sample 2 param 2
+    i(15, "1"),                                         -- Sample 2 expected
+
+    i(16, "10"),                                        -- Sample 3 param 1
+    i(17, "7"),                                         -- Sample 3 param 2
+    i(18, "7"),                                         -- Sample 3 expected
+    })),
 }
