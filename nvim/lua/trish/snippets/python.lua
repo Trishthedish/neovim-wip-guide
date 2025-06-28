@@ -154,7 +154,7 @@ class Solution:
 
   -- mpsp 2 param snippet code
   -- Minimum Problem Solving Product
-  s("mpsp_2p)", fmt([[
+  s("mpsp2", fmt([[
 """
 The Problem {}
 -----------------------------
