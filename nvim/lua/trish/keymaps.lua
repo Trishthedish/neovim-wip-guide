@@ -472,7 +472,7 @@ keymap("n", "<leader>gd", function()
   require("gitsigns").diffthis()
 end, { desc = "Diff this file" })
 
--- Show/hide git blame info next to eachdd line
+-- Show/hide git blame info next to each line
 keymap("n", "<leader>gdc", function()
   require("gitsigns").diffthis("~")
 end, { desc = "Diff this file (cached)" })
