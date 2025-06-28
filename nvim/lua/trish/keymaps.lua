@@ -108,6 +108,112 @@ vim.keymap.set("n", "<leader>sr", function()
 end, { desc = "LuaSnip: Reload Snippets" })
 
 -- ========================================
+-- 🔧 LSP KEYBINDINGS (Language Server Protocol)
+-- ========================================
+-- These keymaps work when LSP is attached to a buffer
+-- They provide IDE-like functionality: hover docs, go to definition, etc.
+
+-- 📖 Show hover documentation (k)
+keymap("n", "K", vim.lsp.buf.hover, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Hover documentation",
+})
+
+-- 🎯 Go to definition (g + d)
+keymap("n", "gd", vim.lsp.buf.definition, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Go to definition",
+})
+
+-- 🔗 Go to implementation (g + i)
+keymap("n", "gi", vim.lsp.buf.implementation, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Go to implementation",
+})
+
+-- 📚 List all references (g + r)
+keymap("n", "gr", vim.lsp.buf.references, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: List references",
+})
+
+-- ✏️ Smart rename across entire project (Space + r + n)
+-- ⚠️ CHANGES YOUR CODE: Renames symbol everywhere - make sure you want this!
+-- 💡 SUPER USEFUL: Safely rename variables/functions everywhere they're used
+-- Example: Rename "calc_area" to "calculate_circle_area" in 50+ files instantly
+-- Much safer than find/replace - understands code context and won't break strings
+keymap("n", "<leader>rn", vim.lsp.buf.rename, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Smart rename everywhere",
+})
+
+-- ⚡ AI-powered code suggestions (Space + c + a)
+-- ⚠️ MAY CHANGE CODE: Some suggestions will modify your code when applied
+-- 💡 SUPER USEFUL: Shows smart fixes and improvements at cursor location
+-- Examples: "Remove unused import", "Add missing type hint", "Fix syntax error"
+-- Like having a coding mentor suggest improvements as you work
+keymap("n", "<leader>ca", vim.lsp.buf.code_action, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Show smart suggestions",
+})
+
+-- 📋 Jump to any function/class in current file (Space + d + s)
+-- 💡 USEFUL: Navigate large files quickly - shows searchable outline
+-- Like a "table of contents" for your code - find functions instantly
+-- Great for files with 100+ lines where scrolling gets tedious
+keymap("n", "<leader>ds", vim.lsp.buf.document_symbol, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: File outline/navigation",
+})
+
+-- 🔧 Auto-format code styling: spacing, indentation, line breaks (Space + f + m)
+-- ⚠️ CHANGES YOUR CODE: Only affects visual formatting, not logic/bugs
+-- 💡 USEFUL: Makes messy code neat and consistent with style standards
+-- Example: Fixes spacing around operators, proper indentation, line lengths
+keymap("n", "<leader>fm", function()
+  vim.lsp.buf.format({ async = true })
+end, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Format buffer",
+})
+
+-- 🚨 Show line diagnostics (Space + d + l)
+keymap("n", "<leader>dl", vim.diagnostic.open_float, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Show line diagnostics",
+})
+
+-- ⬆️ Go to previous diagnostic ([ + d)
+keymap("n", "[d", vim.diagnostic.goto_prev, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Previous diagnostic",
+})
+
+-- ⬇️ Go to next diagnostic (] + d)
+keymap("n", "]d", vim.diagnostic.goto_next, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Next diagnostic",
+})
+
+-- 📋 Show all diagnostics in location list (Space + d + a)
+keymap("n", "<leader>da", vim.diagnostic.setloclist, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Show all diagnostics",
+})
+
+-- ========================================
 -- ✨ VISUAL MODE KEYBINDINGS
 -- ========================================
 
