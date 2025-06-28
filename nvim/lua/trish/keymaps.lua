@@ -98,6 +98,15 @@ keymap('n', '<leader>ti', function()
   require('plugins.indent-blankline').cycle_indent_guides()
 end, { desc = "Cycle indent guide styles" })
 
+-- 🔁 Reload Luasnip snippets from /nvim/lua/trish/snippets/
+-- This lets you refresh your snippets without restarting Neovim.
+vim.keymap.set("n", "<leader>sr", function()
+  require("luasnip.loaders.from_lua").lazy_load({
+    paths = "~/.config/nvim/lua/trish/snippets",
+  })
+  vim.notify("🔄 Snippets reloaded!", vim.log.levels.INFO)
+end, { desc = "LuaSnip: Reload Snippets" })
+
 -- ========================================
 -- ✨ VISUAL MODE KEYBINDINGS
 -- ========================================
