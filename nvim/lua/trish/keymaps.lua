@@ -318,6 +318,11 @@ vim.keymap.set('n', '<leader>gc', function()
   })
 end, { desc = "Live grep in current buffer's directory" })
 
+
+keymap("n", "<leader>gt",
+  "<cmd>Telescope git_status<cr>",
+  { desc = "Git status" })
+
 -- ========================================
 -- 🧭 Harpoon 2 Keybindings
 -- ========================================
