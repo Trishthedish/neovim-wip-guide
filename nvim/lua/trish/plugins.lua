@@ -411,4 +411,15 @@ return {
     win = { border = "rounded", title = true, },
   },
 },
+
+-- ┌────────────────────────────────────┐
+-- │ 🏋️ Practice & Training              │
+-- └────────────────────────────────────┘
+
+-- VimBeGood:
+{
+  "ThePrimeagen/vim-be-good",
+  cmd = "VimBeGood", -- Lazy-load only when this command is used
+  event = "VeryLazy", -- Optional: load on low-priority event
+},
 }
