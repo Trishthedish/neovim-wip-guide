@@ -4,6 +4,16 @@ return {
 -- ┌────────────────────────────────────┐
 -- │ 🎨 UI & Appearance                 │
 -- └────────────────────────────────────┘
+-- Displays hex codes as actual colors with background highlighting
+-- (e.g. #ffd700 shows with golden yellow background)
+{
+  "norcalli/nvim-colorizer.lua",
+  lazy = false,
+  config = function()
+    require("colorizer").setup()
+  end,
+},
+
 {
   "nvim-lualine/lualine.nvim", -- Statusline at the bottom
   config = function()
