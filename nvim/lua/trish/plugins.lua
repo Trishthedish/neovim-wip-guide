@@ -14,6 +14,8 @@ return {
   end,
 },
 
+-- Lualine: Configurable statusline featuring Git
+-- integration, LSP diagnostics, and file indicators
 {
   "nvim-lualine/lualine.nvim", -- Statusline at the bottom
   config = function()
