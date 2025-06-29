@@ -26,15 +26,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
--- Function to remove trailing whitespace in the current buffer
-local function remove_trailing_whitespace()
-  -- %s/\s\+$//e  → substitute trailing whitespace with nothing, no error if none found
-  vim.cmd([[%s/\s\+$//e]])
-end
-
--- Create a user command :TrimWhitespace to run it manually
-vim.api.nvim_create_user_command("TrimWhitespace", remove_trailing_whitespace, {})
-
 -- Set Lua-specific indentation rules when editing Lua files.
 -- This ensures consistent formatting aligned with common Lua style guides:
 -- - 2 spaces per indent level
