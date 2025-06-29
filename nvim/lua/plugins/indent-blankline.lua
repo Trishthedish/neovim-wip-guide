@@ -104,13 +104,13 @@ local function setup_highlights()
   vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 
   -- Muted rainbow highlights
-  vim.api.nvim_set_hl(0, "RainbowRedMuted", { fg = "#E06C75", blend = 60 })
-  vim.api.nvim_set_hl(0, "RainbowYellowMuted", { fg = "#E5C07B", blend = 60 })
-  vim.api.nvim_set_hl(0, "RainbowBlueMuted", { fg = "#61AFEF", blend = 60 })
-  vim.api.nvim_set_hl(0, "RainbowOrangeMuted", { fg = "#D19A66", blend = 60 })
-  vim.api.nvim_set_hl(0, "RainbowGreenMuted", { fg = "#98C379", blend = 60 })
-  vim.api.nvim_set_hl(0, "RainbowVioletMuted", { fg = "#C678DD", blend = 60 })
-  vim.api.nvim_set_hl(0, "RainbowCyanMuted", { fg = "#56B6C2", blend = 60 })
+  vim.api.nvim_set_hl(0, "RainbowRedMuted", { fg = "#E06C75" })
+  vim.api.nvim_set_hl(0, "RainbowYellowMuted", { fg = "#E5C07B" })
+  vim.api.nvim_set_hl(0, "RainbowBlueMuted", { fg = "#61AFEF" })
+  vim.api.nvim_set_hl(0, "RainbowOrangeMuted", { fg = "#D19A66" })
+  vim.api.nvim_set_hl(0, "RainbowGreenMuted", { fg = "#98C379" })
+  vim.api.nvim_set_hl(0, "RainbowVioletMuted", { fg = "#C678DD" })
+  vim.api.nvim_set_hl(0, "RainbowCyanMuted", { fg = "#56B6C2" })
 
   -- Gray highlights
   vim.api.nvim_set_hl(0, "IndentBlanklineChar", { fg = "#3C4048" })
