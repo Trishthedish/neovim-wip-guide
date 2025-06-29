@@ -150,10 +150,20 @@ local function setup()
   setup_highlights()
 
   -- Set up the plugin with default configuration
-  require('ibl').setup(M.configs.rainbow_dashed)
+  require('ibl').setup(M.configs.gray_simple)
 end
 
 -- Call setup
 setup()
+
+-- Auto-reapply highlights and IBL config when colorscheme changes
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    setup_highlights()
+    local current = M.mode_names[M.current_mode]
+    local config = M.configs[current]
+    require("ibl").setup(config)
+  end,
+})
 
 return M
