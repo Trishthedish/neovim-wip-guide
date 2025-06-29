@@ -167,7 +167,23 @@ return {
   "nvim-telescope/telescope.nvim", -- Fuzzy finder and file search
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
-    require("telescope").setup()
+    require("telescope").setup({
+      extensions = {
+        -- Optional: No extra config needed for colorscheme preview,
+        -- but this ensures correct defaults
+      },
+      pickers = {
+        colorscheme = {
+          enable_preview = true, -- <-- this line enables live preview...
+          layout_config = {
+            height = 0.4,
+            width = 0.4,
+            prompt_postion = "top",
+          },
+          layout_strategy = "center",
+        },
+      }
+    })
   end,
 },
 
