@@ -81,6 +81,11 @@ return {
   lazy = false,
 },
 
+-- ╭──────────────────────────────╮
+-- │ 🌈  List of Color Schemes    │
+-- ╰──────────────────────────────╯
+
+-- Tokyo Night: Modern dark theme with vibrant colors
 {
   "folke/tokyonight.nvim", -- Tokyo Night: Modern dark theme with vibrant colors
   -- Plugin loading behavior
@@ -107,6 +112,32 @@ return {
     -- Apply the colorscheme after configuration
     vim.cmd.colorscheme("tokyonight")
   end,
+},
+
+-- Lytmode: A high-contrast, minimalist dark theme with
+-- a cool cyberpunk/terminal aesthetic
+{
+  "github-main-user/lytmode.nvim",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    require('lytmode').setup()
+  end
+},
+
+-- Catppuccin: Soothing, Stylish, and Pastel-Perfect
+{
+  "catppuccin/nvim",
+   lazy = false,
+   name = "catppuccin",
+   priority = 1000,
+},
+
+-- Onedark: A moody and modern dark theme
+{
+  "navarasu/onedark.nvim",
+  lazy = false,
+  priority = 1000,
 },
 
 {
