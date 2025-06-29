@@ -107,6 +107,12 @@ vim.keymap.set("n", "<leader>sr", function()
   vim.notify("🔄 Snippets reloaded!", vim.log.levels.INFO)
 end, { desc = "LuaSnip: Reload Snippets" })
 
+-- 🚀 Hot-reload current Lua file
+-- (great for plugin/dev work!)
+vim.keymap.set("n", "<leader>rr",
+  "<cmd>luafile %<CR>",
+{ desc = "Reload current Lua file" })
+
 -- ========================================
 -- 🔧 LSP KEYBINDINGS (Language Server Protocol)
 -- ========================================
