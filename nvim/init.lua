@@ -25,10 +25,16 @@ require("plugins.indent-blankline")
 -- 4. 🧠 Load LSP configs (language-specific setups)
 require("trish.lsp")
 
--- 5. 📌 Custom autocommands for Neovim
--- This file sets up event-driven behaviors, such as:
---     • Highlighting trailing whitespace on buffer open
---     • User commands for manual cleanup
---     • Other buffer/window-related automation
--- 💡 Make sure the 'ExtraWhitespace' highlight group is defined in your colorscheme
+-- 5. 📌 Event-driven automation (autocmds)
+-- This file sets up automatic behaviors triggered by Neovim events:
+--     • Trailing whitespace highlighting when entering buffers
+--     • Language-specific indentation rules (Lua, Python, JS/TS)
+--     • File type detection and buffer-specific settings
 require("trish.autocmds")
+
+-- 6. 🎯 Manual user commands
+-- Custom commands that extend Neovim's functionality:
+--     • :GitStageLines - Stage specific line ranges with surgical precision
+--     • :TrimWhitespace - Manual cleanup of trailing whitespace
+--     • Other on-demand utilities and shortcuts
+require("trish.user-commands")
