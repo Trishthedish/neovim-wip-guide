@@ -106,14 +106,14 @@ local function setup_highlights()
   vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
   vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 
-  -- Muted rainbow highlights
-  vim.api.nvim_set_hl(0, "RainbowRedMuted", { fg = "#E06C75" })
-  vim.api.nvim_set_hl(0, "RainbowYellowMuted", { fg = "#E5C07B" })
-  vim.api.nvim_set_hl(0, "RainbowBlueMuted", { fg = "#61AFEF" })
-  vim.api.nvim_set_hl(0, "RainbowOrangeMuted", { fg = "#D19A66" })
-  vim.api.nvim_set_hl(0, "RainbowGreenMuted", { fg = "#98C379" })
-  vim.api.nvim_set_hl(0, "RainbowVioletMuted", { fg = "#C678DD" })
-  vim.api.nvim_set_hl(0, "RainbowCyanMuted", { fg = "#56B6C2" })
+  -- -- Muted rainbow highlights
+vim.api.nvim_set_hl(0, "RainbowRedMuted",    { fg = "#D99A9A" }) -- soft rose
+vim.api.nvim_set_hl(0, "RainbowOrangeMuted", { fg = "#E6A87A" }) -- creamsicle
+vim.api.nvim_set_hl(0, "RainbowYellowMuted", { fg = "#F0DC9B" }) -- wheat gold
+vim.api.nvim_set_hl(0, "RainbowGreenMuted",  { fg = "#B6E1A3" }) -- spring mint
+vim.api.nvim_set_hl(0, "RainbowCyanMuted",   { fg = "#A5DEE4" }) -- glacier teal
+vim.api.nvim_set_hl(0, "RainbowBlueMuted",   { fg = "#A9C6F5" }) -- powder sky
+vim.api.nvim_set_hl(0, "RainbowVioletMuted", { fg = "#D1B2F2" }) -- lilac bloom
 
   -- Gray highlights
   vim.api.nvim_set_hl(0, "IndentBlanklineChar", { fg = "#3C4048" })
