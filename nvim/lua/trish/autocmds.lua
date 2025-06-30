@@ -15,6 +15,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
       Lazy = true,
       lazy = true,
       lualine = true,
+      mason = true,
     }
 
     -- 🛑 Disable highlight in special buffers

@@ -29,7 +29,8 @@ M.configs = {
           "dashboard",
           "NvimTree",
           "lazy",
-          "lualine"
+          "lualine",
+          "mason",
         }
       },
       scope = {
@@ -59,7 +60,8 @@ M.configs = {
           "dashboard",
           "NvimTree",
           "lazy",
-          "lualine"
+          "lualine",
+          "mason",
         }
       },
       scope = {
@@ -82,7 +84,8 @@ M.configs = {
           "dashboard",
           "NvimTree",
           "lazy",
-          "lualine"
+          "lualine",
+          "mason",
         }
       },
       scope = {
