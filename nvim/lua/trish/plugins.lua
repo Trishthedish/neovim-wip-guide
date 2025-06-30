@@ -213,8 +213,56 @@ return {
 -- ┌────────────────────────────────────┐
 -- │ 🧠 LSP                             │
 -- └────────────────────────────────────┘
+
+-- Mason: The package manager for LSP servers, DAP adapters, linters & formatters
+-- This is the core plugin that handles downloading and installing language tools
+-- Think of it like a "homebrew" but specifically for Neovim development tools
+{
+  "williamboman/mason.nvim",
+  config = function()
+    require("mason").setup()
+  end,
+},
+
+-- Mason-LSPConfig: The bridge between Mason and nvim-lspconfig
+-- This plugin automatically configures LSP servers that Mason installs
+-- It ensures Mason-installed servers work seamlessly with nvim-lspconfig
+-- Without this, you'd have to manually tell lspconfig about Mason's install paths
+{
+  "williamboman/mason-lspconfig.nvim",
+  dependencies = { "mason.nvim" },
+  config = function()
+    require("mason-lspconfig").setup({
+      -- Ensure these servers are installed automatically
+      ensure_installed = {
+        "lua_ls",    -- Lua language server
+        "pyright",   -- Python language server
+      },
+      -- Auto-install any LSP server you try to use
+      automatic_installation = true,
+
+      -- CRITICAL: Use handlers to prevent auto-setup conflicts
+      handlers = {
+        -- Default handler - let our custom configs handle everything
+        function(server_name)
+          -- Do nothing - prevents mason-lspconfig from auto-configuring servers
+          -- Our custom configurations in trish.lsp.* will handle the setup
+        end,
+
+        -- You can add specific overrides here if needed
+        -- ["lua_ls"] = function() end,  -- Explicitly do nothing for lua_ls
+        -- ["pyright"] = function() end, -- Explicitly do nothing for pyright
+      },
+    })
+  end,
+},
+
+-- LSPConfig: The actual LSP configuration plugin (your existing setup)
+-- This handles the communication between Neovim and language servers
+-- Mason installs the servers, mason-lspconfig bridges them, and this configures them
 {
   "neovim/nvim-lspconfig", -- Collection of LSP configs
+  dependencies = { "mason-lspconfig.nvim" },
   config = function()
   -- load master LSP configuration
     require("trish.lsp.init")
