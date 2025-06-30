@@ -220,6 +220,50 @@ keymap("n", "<leader>da", vim.diagnostic.setloclist, {
 })
 
 -- ========================================
+-- 🔄 LSP SERVER MANAGEMENT
+-- ========================================
+
+-- Tools for restarting/managing LSP servers when things go wrong
+-- 🔄 Restart Lua LSP server (Space + l + r)
+-- 💡 USEFUL: When Lua LSP acts up or you change config
+-- Specifically restarts lua_ls without affecting other language servers
+keymap("n", "<leader>lr", "<cmd>LspRestart lua_ls<cr>", {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Restart Lua server",
+})
+
+-- 🔄 Restart ALL LSP servers (Space + l + R)
+-- 💡 USEFUL: Nuclear option when multiple servers are misbehaving
+-- Restarts every LSP server attached to current buffer
+-- TO DO: see if I can find another non-shift way to do this
+keymap("n", "<leader>lR", "<cmd>LspRestart<cr>", {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Restart all servers",
+})
+
+-- 📊 Show LSP server info (Space + l + i)
+-- 💡 USEFUL: Debug LSP issues - shows which servers are running
+-- Great for troubleshooting when things aren't working
+keymap("n", "<leader>li", "<cmd>LspInfo<cr>", {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Show server info",
+})
+
+-- 🧹 Clear diagnostic cache (Space + d + r)
+-- 💡 USEFUL: For your specific issue with vim global warnings
+-- Clears stale diagnostic messages that persist between buffers
+keymap("n", "<leader>dr", function()
+  vim.diagnostic.reset()
+end, {
+  noremap = true,
+  silent = true,
+  desc = "LSP: Clear diagnostic cache",
+})
+
+-- ========================================
 -- ✨ VISUAL MODE KEYBINDINGS
 -- ========================================
 
