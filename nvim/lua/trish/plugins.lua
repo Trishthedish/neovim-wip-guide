@@ -477,4 +477,41 @@ return {
   cmd = "VimBeGood", -- Lazy-load only when this command is used
   event = "VeryLazy", -- Optional: load on low-priority event
 },
+
+-- ┌────────────────────────────────────┐
+-- │ 🍿 Snacks (Multi-purpose Utils)    │
+-- └────────────────────────────────────┘
+-- Snacks.nvim: A collection of small QoL (Quality of Life) plugins by folke
+-- Starting with dashboard only - can expand to include notifications,
+-- status indicators, file utilities, and performance optimizations
+{
+ "folke/snacks.nvim",
+ priority = 1000,
+ lazy = false,
+ config = function()
+   require("snacks").setup({
+     -- Enable just the dashboard for now
+     bigfile = { enabled = false },
+     notifier = { enabled = false },
+     quickfile = { enabled = false },
+     statuscolumn = { enabled = false },
+     words = { enabled = false },
+
+     -- Focus on dashboard only
+     dashboard = {
+       enabled = true,
+       sections = {
+         {
+            section = "text",
+            text = "Welcome to Neovim !",
+            padding = 2
+         },
+         { section = "keys", gap = 1, padding = 1 },
+         { section = "startup" },
+       },
+     },
+   })
+ end,
+},
+
 }
