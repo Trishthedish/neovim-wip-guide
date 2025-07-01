@@ -7,7 +7,9 @@ vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()
     local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
     local buftype = vim.api.nvim_get_option_value("buftype", { buf = 0 })
+    local bufname = vim.api.nvim_buf_get_name(0)
 
+    -- More comprehensive exclusion list
     local exclude = {
       help = true,
       dashboard = true,
@@ -16,10 +18,27 @@ vim.api.nvim_create_autocmd("BufEnter", {
       lazy = true,
       lualine = true,
       mason = true,
+      snacks_dashboard = true,
+      snacks = true,
+      [""] = true,  -- Empty filetype
     }
 
-    -- 🛑 Disable highlight in special buffers
-    if buftype ~= "" or exclude[filetype] then
+    -- Exclude special buffer types
+    local exclude_buftypes = {
+      nofile = true,
+      terminal = true,
+      prompt = true,
+      help = true,
+      quickfix = true,
+    }
+
+    -- Check if buffer name contains snacks (fallback)
+    local is_snacks_buffer = bufname:match("snacks") or bufname:match("dashboard")
+
+    -- Disable highlight if any exclusion condition is met
+    if exclude_buftypes[buftype] or
+       exclude[filetype] or
+       is_snacks_buffer then
       vim.cmd([[match none]])
     else
       vim.cmd([[match ExtraWhitespace /\s\+$/]])

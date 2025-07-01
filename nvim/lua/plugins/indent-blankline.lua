@@ -31,6 +31,8 @@ M.configs = {
           "lazy",
           "lualine",
           "mason",
+          "snacks",
+          "snacks_dashboard"
         }
       },
       scope = {
@@ -62,6 +64,8 @@ M.configs = {
           "lazy",
           "lualine",
           "mason",
+          "snacks",
+          "snacks_dashboard"
         }
       },
       scope = {
@@ -86,6 +90,8 @@ M.configs = {
           "lazy",
           "lualine",
           "mason",
+          "snacks",
+          "snacks_dashboard"
         }
       },
       scope = {
