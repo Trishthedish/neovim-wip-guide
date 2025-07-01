@@ -35,13 +35,14 @@ return {
       lualine_a = {'mode'},
       lualine_b = {
         'branch',
+        { function() return "" end }, -- Github icon
         {
           'diff',
            colored = true,
            symbols = {
-             added = " ",
-             modified = " ",
-             removed = " ",
+             added = "🌱",
+             modified = "🔧 ",
+             removed = "🗑️ ",
            }
         },
       },
@@ -63,7 +64,7 @@ return {
           {
             'diagnostics',
             sources = { 'nvim_lsp' },
-            symbols = {error = '', warn = '', info = '', hint = ''},
+            symbols = {error = '  ', warn = '  ', info = '  ', hint = '  '},
           },
           'filetype'  -- This shows language with icon (lua , js , py  etc.)
         },
