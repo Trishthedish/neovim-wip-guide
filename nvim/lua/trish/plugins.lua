@@ -219,6 +219,7 @@ return {
 -- Think of it like a "homebrew" but specifically for Neovim development tools
 {
   "williamboman/mason.nvim",
+  priority = 1000, -- Load first
   config = function()
     require("mason").setup()
   end,
@@ -231,6 +232,7 @@ return {
 {
   "williamboman/mason-lspconfig.nvim",
   dependencies = { "mason.nvim" },
+  priority = 999, -- Load second
   config = function()
     require("mason-lspconfig").setup({
       -- Ensure these servers are installed automatically
@@ -238,20 +240,24 @@ return {
         "lua_ls",    -- Lua language server
         "pyright",   -- Python language server
       },
-      -- Auto-install any LSP server you try to use
-      automatic_installation = true,
+      -- DISABLE auto-installation to prevent conflicts
+      automatic_installation = false,
 
       -- CRITICAL: Use handlers to prevent auto-setup conflicts
       handlers = {
-        -- Default handler - let our custom configs handle everything
+        -- Default handler - EXPLICITLY do nothing
         function(server_name)
-          -- Do nothing - prevents mason-lspconfig from auto-configuring servers
-          -- Our custom configurations in trish.lsp.* will handle the setup
+          -- Completely prevent auto-setup
+          return
         end,
 
-        -- You can add specific overrides here if needed
-        -- ["lua_ls"] = function() end,  -- Explicitly do nothing for lua_ls
-        -- ["pyright"] = function() end, -- Explicitly do nothing for pyright
+        -- Explicitly prevent these servers from auto-configuring
+        ["lua_ls"] = function()
+          -- Do absolutely nothing
+        end,
+        ["pyright"] = function()
+          -- Do absolutely nothing
+        end,
       },
     })
   end,
@@ -261,10 +267,11 @@ return {
 -- This handles the communication between Neovim and language servers
 -- Mason installs the servers, mason-lspconfig bridges them, and this configures them
 {
-  "neovim/nvim-lspconfig", -- Collection of LSP configs
+  "neovim/nvim-lspconfig",
   dependencies = { "mason-lspconfig.nvim" },
+  priority = 998, -- Load last
   config = function()
-  -- load master LSP configuration
+    -- load master LSP configuration
     require("trish.lsp.init")
   end,
 },

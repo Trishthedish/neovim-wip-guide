@@ -1,4 +1,3 @@
-
 -- lua/trish/lsp/lua.lua
 -- 🌙 Lua Language Server configuration
 -- Configures lua_ls for Neovim development with proper vim global recognition
@@ -6,17 +5,26 @@
 return function()
   local lspconfig = require("lspconfig")
 
-  -- Prevent multiple setups of the same Server
-  if lspconfig.lua_ls.manager then
-    return
+  -- NUCLEAR OPTION: Force stop ALL lua_ls clients before setup
+  for _, client in pairs(vim.lsp.get_clients()) do
+    if client.name == "lua_ls" then
+      print("Stopping existing lua_ls client:", client.id)
+      client.stop()
+    end
   end
 
-  lspconfig.lua_ls.setup({
+  -- Wait a moment for cleanup
+  vim.defer_fn(function()
+    -- Now set up our properly configured lua_ls
+    lspconfig.lua_ls.setup({
     -- Enhanced capabilities for completion
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
 
-    -- Only start once per root directory
-    single_file_support = false,
+    -- IMPORTANT: Enable single file support to prevent workspace conflicts
+    single_file_support = true,
+
+    -- Root directory detection
+    root_dir = lspconfig.util.root_pattern(".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git"),
 
     -- Server-specific settings
     settings = {
@@ -26,13 +34,17 @@ return function()
           version = "LuaJIT",
         },
         diagnostics = {
-          -- Recognize 'vim' as a valid global variable
-          globals = { "vim" },
+          -- NUCLEAR OPTION: Recognize vim globals more aggressively
+          globals = {
+            "vim", "describe", "it", "before_each", "after_each",
+          },
+          -- Try this if the issue persists - disables the warning entirely
+          disable = { "undefined-global" },
         },
         workspace = {
-          -- Make lua_ls aware of Neovim's runtime files for better completions
+          -- SIMPLIFIED: Just use the basic vim runtime
           library = vim.api.nvim_get_runtime_file("", true),
-          -- Don't ask about luassert, busted, etc. in workspace
+          -- Force it to ignore third party warnings
           checkThirdParty = false,
         },
         telemetry = {
@@ -43,7 +55,31 @@ return function()
         completion = {
           callSnippet = "Replace"
         },
+        -- Add this to help with persistent diagnostics
+        format = {
+          enable = true,
+          defaultConfig = {
+            indent_style = "space",
+            indent_size = "2",
+          }
+        },
       },
     },
-  })
+
+    -- Add on_attach to ensure proper setup
+    on_attach = function(client, bufnr)
+      -- Clear any existing diagnostics when attaching
+      vim.diagnostic.reset(nil, bufnr)
+
+      -- Optional: Add buffer-local keymaps here if needed
+      local opts = { buffer = bufnr, silent = true }
+      -- Example: vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    end,
+
+    -- Add flags to control LSP behavior
+    flags = {
+      debounce_text_changes = 150,
+    },
+      })
+  end, 100) -- Wait 100ms for cleanup
 end
