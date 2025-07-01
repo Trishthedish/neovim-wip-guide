@@ -492,6 +492,9 @@ return {
   "ThePrimeagen/vim-be-good",
   cmd = "VimBeGood", -- Lazy-load only when this command is used
   event = "VeryLazy", -- Optional: load on low-priority event
+  config = function() -- Attempting to add persistent stats from game play
+      vim.g.vim_be_good_save_statistics = true
+  end,
 },
 
 -- ┌────────────────────────────────────┐
