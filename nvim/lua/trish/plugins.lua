@@ -140,8 +140,23 @@ return {
   priority = 1000,
 },
 
+-- Cyberdream: A high-tech neon cyberpunk theme
 {
-  "kyazdani42/nvim-web-devicons", -- Adds icons for file types
+  "scottmckendry/cyberdream.nvim",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    require("cyberdream").setup({
+      theme = "dark", -- or "light" if you prefer
+      transparent = false, -- or true if you want transparent bg
+    })
+    vim.cmd.colorscheme("cyberdream")
+  end,
+},
+
+-- File type icons for enhanced visual file identification
+{
+  "kyazdani42/nvim-web-devicons",
   lazy = true,
 },
 
