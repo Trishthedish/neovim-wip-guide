@@ -521,8 +521,7 @@ return {
        enabled = true,
        sections = {
          {
-            section = "text",
-            text = "Welcome to Neovim !",
+            section = "header",
             padding = 2
          },
          { section = "keys", gap = 1, padding = 1 },
