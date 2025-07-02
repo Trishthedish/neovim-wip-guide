@@ -50,3 +50,18 @@ end, {
   nargs = "+",
   desc = "Stage specific lines (start_line [end_line])"
 })
+
+-- ========================================
+-- 📈 VimBeGood Motivator
+-- ========================================
+-- 📈 VimBeGood Motivator Progress Window (:VimBeProgress)
+-- Opens a centered floating window with personalized VimBeGood stats.
+-- Shows today's sessions, average time, current streak, skill breakdown,
+-- and a motivational tip of the day. Great for tracking your improvement
+-- and staying inspired as you level up your Vim skills!
+
+vim.api.nvim_create_user_command("VimBeProgress", function()
+  require("trish.vimbegood_motivator").open()
+end, {
+  desc = "Open floating VimBeGood progress window"
+})
