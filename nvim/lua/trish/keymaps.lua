@@ -113,6 +113,14 @@ vim.keymap.set("n", "<leader>rr",
   "<cmd>luafile %<CR>",
 { desc = "Reload current Lua file" })
 
+-- 🔍 Clear Search Highlights (Double Escape)
+-- Press <Esc><Esc> in normal mode to clear lingering `/` or `?` search highlights.
+-- Handy after navigating with `n` or `N` and no longer needing the highlight.
+-- Mimics behavior from some plugins or IDEs for quick visual reset.
+vim.keymap.set("n", "<Esc><Esc>", "<cmd>nohlsearch<CR>", {
+  desc = "Clear search highlight"
+})
+
 -- ========================================
 -- 🔧 LSP KEYBINDINGS (Language Server Protocol)
 -- ========================================
