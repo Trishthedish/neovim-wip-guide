@@ -539,3 +539,46 @@ end, { desc = "Diff this file" })
 keymap("n", "<leader>gdc", function()
   require("gitsigns").diffthis("~")
 end, { desc = "Diff this file (cached)" })
+
+-- ========================================
+-- 🗒️ Scratch Buffer Operations
+-- ========================================
+-- Function to create a scratch Lua buffer in vertical split
+local function create_scratch_lua_buffer()
+  -- Create vertical split
+  vim.cmd('vsplit')
+
+  -- Create new buffer
+  local buf = vim.api.nvim_create_buf(false, true)
+
+  -- Set buffer to current window
+  vim.api.nvim_win_set_buf(0, buf)
+
+  -- Set filetype to lua
+  vim.api.nvim_buf_set_option(buf, 'filetype', 'lua')
+
+  -- Set buffer as scratch (no file associated)
+  vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
+  vim.api.nvim_buf_set_option(buf, 'bufhidden', 'hide')
+  vim.api.nvim_buf_set_option(buf, 'swapfile', false)
+
+  -- Optional: Set a buffer name
+  vim.api.nvim_buf_set_name(buf, 'scratch.lua')
+
+  -- Optional: Add some initial content
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
+    '-- Scratch Lua buffer',
+    '',
+    ''
+  })
+
+  -- Move cursor to end
+  vim.api.nvim_win_set_cursor(0, {3, 0})
+end
+
+-- Create the keymap (using <leader>sl for "scratch lua")
+vim.keymap.set('n', '<leader>sl', create_scratch_lua_buffer, {
+  desc = 'Create scratch Lua buffer in vertical split',
+  noremap = true,
+  silent = true
+})
