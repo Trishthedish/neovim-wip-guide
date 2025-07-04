@@ -227,6 +227,38 @@ keymap("n", "<leader>da", vim.diagnostic.setloclist, {
   desc = "LSP: Show all diagnostics",
 })
 
+-- 🍿 Toggle Line Number View (space + l + n)
+-- Switch between relative line numbers (your default)
+-- and absolute-only line numbers.
+-- This uses snacks.nvim to manage UI state cleanly.
+vim.keymap.set("n", "<leader>ln", function()
+  local snacks = require("snacks")
+
+  -- Check if snacks has toggle utility and our toggle exists
+  if snacks.toggle and snacks.toggle.get and snacks.toggle.get("line_numbers_toggle") then
+    -- Use snacks toggle
+    snacks.toggle("line_numbers_toggle")
+    -- Add feedback message
+    if vim.opt.relativenumber:get() then
+      print("🔄 Relative line numbers")
+    else
+      print("📊 Absolute line numbers")
+    end
+  else
+    -- Fallback to direct approach
+    local current_relative = vim.opt.relativenumber:get()
+    if current_relative then
+      vim.opt.number = true
+      vim.opt.relativenumber = false
+      print("📊 Absolute line numbers")
+    else
+      vim.opt.number = true
+      vim.opt.relativenumber = true
+      print("🔄 Relative line numbers")
+    end
+  end
+end, { desc = "Toggle Absolute Line Numbers" })
+
 -- ========================================
 -- 🔄 LSP SERVER MANAGEMENT
 -- ========================================
