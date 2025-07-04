@@ -183,3 +183,41 @@ end
 vim.api.nvim_create_user_command('SortVimOptions', sort_vim_options, {
   desc = 'Sort vim.opt settings alphabetically while keeping comments & header attached'
 })
+
+-- ========================================
+-- 🍿 Snack Toggles (UI State Shortcuts)
+-- ========================================
+-- These commands toggle visual/editor UI states using snacks.nvim.
+-- Think of them as quick switches between different "modes" of viewing/editing.
+
+-- Toggle Line Numbers Command. Usuage (:ToggleLineNumbers)
+-- First try snacks approach, with fallback
+vim.api.nvim_create_user_command("ToggleLineNumbers", function()
+  local snacks = require("snacks")
+
+  -- Check if snacks has toggle utility and our toggle exists
+  if snacks.toggle and snacks.toggle.get and snacks.toggle.get("line_numbers_toggle") then
+    -- Use snacks toggle
+    snacks.toggle("line_numbers_toggle")
+    -- Add feedback message
+    if vim.opt.relativenumber:get() then
+      print("🔄 Relative line numbers")
+    else
+      print("📊 Absolute line numbers")
+    end
+  else
+    -- Fallback to direct approach
+    local current_relative = vim.opt.relativenumber:get()
+    if current_relative then
+      vim.opt.number = true
+      vim.opt.relativenumber = false
+      print("📊 Absolute line numbers")
+    else
+      vim.opt.number = true
+      vim.opt.relativenumber = true
+      print("🔄 Relative line numbers")
+    end
+  end
+end, {
+  desc = "Toggle between relative and absolute line numbers",
+})

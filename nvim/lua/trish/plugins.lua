@@ -529,6 +529,8 @@ return {
        },
      },
    })
+   -- load your custom snacks
+   require("trish.snacks_states").setup()
  end,
 },
 
