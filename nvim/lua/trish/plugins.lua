@@ -187,6 +187,7 @@ return {
       extensions = {
         -- Optional: No extra config needed for colorscheme preview,
         -- but this ensures correct defaults
+        cheatsheet = {}, -- Add this line to load it with default settings
       },
       pickers = {
         colorscheme = {
@@ -200,6 +201,9 @@ return {
         },
       }
     })
+
+    -- 🔑 This is the *correct* place to load the extensions
+    require("telescope").load_extension("cheatsheet")
   end,
 },
 
@@ -481,6 +485,33 @@ return {
     plugins = {spelling = {enabled = true} },
     win = { border = "rounded", title = true, },
   },
+},
+
+-- Cheatsheet.nvim: 🧾 Interactive reference for keymaps, Lua APIs, and plugin commands
+-- Launch via `:Cheatsheet` or Telescope (`<leader>cc`) to search across docs
+{
+  "sudormrfbin/cheatsheet.nvim",
+  dependencies = {
+    "nvim-telescope/telescope.nvim",
+    "nvim-lua/popup.nvim",
+    "nvim-lua/plenary.nvim",
+  },
+  cmd = "Cheatsheet",
+  keys = {
+    { "<leader>cc", "<cmd>Telescope cheatsheet<CR>", desc = "📓 Cheatsheet (Telescope UI)" },
+  },
+  config = function()
+    require("cheatsheet").setup({
+      -- Load all cheatsheets by default (omit `enabled` for max coverage)
+      bundled_cheatsheets = {
+        -- Don't exclude any unless you want to skip something specific like:
+        disabled = { "nerd-fonts" },
+      },
+      bundled_plugin_cheatsheets = {
+        enabled = { "gitsigns", "telescope", "nvim-cmp", "harpoon" },
+      },
+    })
+  end,
 },
 
 -- ┌────────────────────────────────────┐

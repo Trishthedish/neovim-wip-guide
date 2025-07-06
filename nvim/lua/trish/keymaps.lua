@@ -121,6 +121,11 @@ vim.keymap.set("n", "<Esc><Esc>", "<cmd>nohlsearch<CR>", {
   desc = "Clear search highlight"
 })
 
+-- 📓 Open Cheatsheet
+-keymap("n", <leader>cc, "<cmd>Telescope Cheatsheet<CR>", {
+  desc = "📓 Cheetsheets via Telescope"
+})
+
 -- ========================================
 -- 🔧 LSP KEYBINDINGS (Language Server Protocol)
 -- ========================================
