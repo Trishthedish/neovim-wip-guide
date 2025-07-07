@@ -122,7 +122,7 @@ vim.keymap.set("n", "<Esc><Esc>", "<cmd>nohlsearch<CR>", {
 })
 
 -- 📓 Open Cheatsheet
--keymap("n", <leader>cc, "<cmd>Telescope Cheatsheet<CR>", {
+keymap("n", "<leader>cc", "<cmd>Telescope Cheatsheet<CR>", {
   desc = "📓 Cheetsheets via Telescope"
 })
 
