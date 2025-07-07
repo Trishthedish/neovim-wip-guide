@@ -20,7 +20,7 @@ require("lazy").setup(require("trish.plugins"))
 -- Extracting complex plugins to individual /plugins/ files for better organization
 -- This enables easier customization (e.g., toggling indent-blankline color schemes)
 -- while keeping init.lua clean and maintainable
-require("plugins.indent-blankline")
+require("plugins.indent_blankline")
 
 -- 4. 🧠 Load LSP configs (language-specific setups)
 require("trish.lsp")

@@ -1,4 +1,4 @@
--- ~/.config/nvim/plugins/indent-blankline.lua
+-- ~/.config/nvim/plugins/indent_blankline.lua
 
 local M = {}
 
