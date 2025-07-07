@@ -37,4 +37,4 @@ require("trish.autocmds")
 --     • :GitStageLines - Stage specific line ranges with surgical precision
 --     • :TrimWhitespace - Manual cleanup of trailing whitespace
 --     • Other on-demand utilities and shortcuts
-require("trish.user-commands")
+require("trish.user_commands")

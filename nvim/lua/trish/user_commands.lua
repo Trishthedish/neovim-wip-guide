@@ -1,4 +1,4 @@
--- nvim/lua/trish/user-commands.lua
+-- nvim/lua/trish/user_commands.lua
 
 -- ========================================
 -- 🧹 File Cleanup Commands
