@@ -577,6 +577,78 @@ keymap("n", "<leader>gdc", function()
   require("gitsigns").diffthis("~")
 end, { desc = "Diff this file (cached)" })
 
+-- 🩹 Soft Reset Git Hunk with Register Save - (<space> + gz)
+-- Mnemonic: "git zap"
+-- Yanks the hunk into register `"z"` before resetting it with
+-- Gitsigns. Great for discarding a change without losing it
+-- completely. You can bring it back with (<leader> + gv).
+keymap("n", "<leader>gz", function()
+  local gs = require("gitsigns")
+  local cursor = vim.api.nvim_win_get_cursor(0)[1]
+  local hunk = nil
+
+  for _, h in ipairs(gs.get_hunks() or {}) do
+    local start = h.added.start
+    local finish = start + math.max(h.added.count, 1) - 1
+    if cursor >= start and cursor <= finish then
+      hunk = h
+      break
+    end
+  end
+
+  if not hunk then
+    vim.notify("No hunk under cursor", vim.log.levels.WARN)
+    return
+  end
+
+  gs.preview_hunk()
+
+  vim.defer_fn(function()
+    vim.ui.select({ "Yes", "No" }, {
+      prompt = "Reset this hunk (yanked to register z)?"
+    }, function(choice)
+      if choice == "Yes" then
+        local start = hunk.added.start
+        local finish = start + math.max(hunk.added.count, 1) - 1
+
+        -- Save hunk range for later use
+        vim.b._last_hunk_line = start
+
+        -- Yank to register "z"
+        vim.cmd(string.format("silent %d,%dy z", start, finish))
+
+        -- Reset the hunk
+        gs.reset_hunk()
+
+        vim.notify("✅ Hunk reset and yanked to register z", vim.log.levels.INFO)
+      else
+        vim.notify("Cancelled hunk reset", vim.log.levels.INFO)
+      end
+    end)
+  end, 200)
+end, { desc = "🩹 Preview & zap hunk (soft reset)" })
+
+-- 🔁 Reapply Previously Yanked Git Hunk (<leader>gv)
+-- Mnemonic: "git vomit"
+-- This pastes the contents of register "z" back into the buffer,
+-- effectively undoing a soft-reset hunk that was yanked using <leader>ghr.
+-- It does NOT re-stage the hunk or re-apply it via git — it simply pastes.
+keymap("n", "<leader>gv", function()
+  local line = vim.b._last_hunk_line
+  if not line then
+    vim.notify("No hunk position saved. Can't reapply.", vim.log.levels.ERROR)
+    return
+  end
+
+  -- Get the contents of register z
+  local hunk_lines = vim.fn.getreg("z", 1, true) -- [1] = linewise mode, true = list form
+
+  -- Insert the lines at the original location
+  vim.api.nvim_buf_set_lines(0, line - 1, line - 1, false, hunk_lines)
+
+  vim.notify("🔁 Reapplied hunk from register z at line " .. line, vim.log.levels.INFO)
+end, { desc = "🔁 Reapply yanked hunk (from soft reset)" })
+
 -- ========================================
 -- 🗒️ Scratch Buffer Operations
 -- ========================================
