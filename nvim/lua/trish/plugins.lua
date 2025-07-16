@@ -230,6 +230,19 @@ return {
   end,
 },
 
+  -- Recall: refines the use of neovim marks. By focusing on global marks,
+  -- streamlining their usuage and enhancing their visibility and navigability.
+{
+  "fnune/recall.nvim",
+  version = "*",
+  dependencies = { "nvim-telescope/telescope.nvim" },
+  config = function()
+    require("recall").setup({
+      telescope = { autoload = true },  -- Automatically load Telescope extension
+    })
+  end,
+},
+
 -- ┌────────────────────────────────────┐
 -- │ 🧠 LSP                             │
 -- └────────────────────────────────────┘

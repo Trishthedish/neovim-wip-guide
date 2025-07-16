@@ -691,3 +691,52 @@ vim.keymap.set('n', '<leader>sl', create_scratch_lua_buffer, {
   noremap = true,
   silent = true
 })
+
+-- ========================================
+-- 🔃  Recall Keymaps
+-- ========================================
+
+-- FORM A: Deferred require() - Function Style
+-- Use this for: Plugin Lua APIs that need lazy loading
+-- Benefits:
+--   - Only requires the plugin when key is pressed
+--   - Safe for lazy-loaded plugins
+--   - Better error handling (errors happen at keypress, not config time)
+--   - Works even if plugin isn't loaded at startup
+
+-- 🔄 Toggle recall marks using deferred require
+vim.keymap.set("n", "<leader>mm", function ()
+  require("recall").toggle()
+end, {
+    desc = "Toggle recall marks",
+    noremap = true,
+    silent = true,
+})
+
+-- FORM B: Command Style - String based
+-- Use this for: Simple vim commands and telescope commands
+-- Benefits:
+--   - Cleaner, more concise syntax
+--   - Goes straight to Neovim command line
+--   - No Lua require() overhead
+--   - Perfect for commands that auto-register on plugin load
+
+-- 📋 Show a list of recall.nvim marks in Telescope - (space + ml)
+vim.keymap.set("n", "<leader>ml", "<cmd>Telescope recall<CR>",{
+  desc = "List recall marks",
+})
+
+-- Jump to next recall mark (space + mn)
+vim.keymap.set("n", "<leader>mn", "<cmd>RecallNext<CR>", {
+  desc = "Jumpt to next recall mark"
+})
+
+-- Jump to previous mark (space + mp)
+vim.keymap.set("n", "<leader>mp", "<cmd>RecallPrevious<CR>", {
+  desc = "Jump to previous recall mark",
+})
+
+-- Clear all recall marks (space + mc)
+vim.keymap.set("n", "<leader>mc","<cmd>RecallClear<CR>", {
+  desc = "Clear all recent marks",
+})
