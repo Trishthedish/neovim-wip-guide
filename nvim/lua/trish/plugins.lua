@@ -439,6 +439,20 @@ return {
   },
 },
 
+-- 🧠 vim-coach.nvim: Your personal Vim coach!
+-- A comprehensive, beginner-friendly command reference for Neovim.
+-- This plugin offers an interactive, searchable guide to Vim/Neovim commands,
+-- complete with detailed explanations, helpful tips, and context-aware suggestions.
+{
+  "shahshlok/vim-coach.nvim",
+  dependencies = {
+    "folke/snacks.nvim",
+  },
+  config = function()
+    require("vim-coach").setup()
+  end,
+},
+
 -- Cheatsheet.nvim: 🧾 Interactive reference for keymaps, Lua APIs, and plugin commands
 -- Launch via `:Cheatsheet` or Telescope (`<leader>cc`) to search across docs
 {
