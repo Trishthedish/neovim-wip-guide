@@ -204,7 +204,7 @@ return {
           layout_config = {
             height = 0.4,
             width = 0.4,
-            prompt_postion = "top",
+            prompt_position = "top",
           },
           layout_strategy = "center",
         },
