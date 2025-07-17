@@ -370,8 +370,8 @@ keymap("n", "<leader>fk",
   { desc = "Telescope: 🔍 Search all keymaps"}
 )
 
--- 🔎 Fuzzy find files relative to the current buffer's location (Space + f + c)
-vim.keymap.set('n', '<leader>fc', function()
+-- 🔎 Fuzzy find files relative to the current buffer's location (Space + f + n)
+vim.keymap.set('n', '<leader>fn', function()
   -- Get the absolute path of the file currently open in the buffer
   local current_file = vim.fn.expand('%:p')
 
@@ -382,7 +382,7 @@ vim.keymap.set('n', '<leader>fc', function()
     require('telescope.builtin').find_files({
       cwd = cwd,
       -- ':t' gets just the tail/basename of the path for cleaner title
-      prompt_title = "Find Files in " .. vim.fn.fnamemodify(cwd, ':t')
+      prompt_title = "Find nearby Files in " .. vim.fn.fnamemodify(cwd, ':t')
     })
     return
   end
@@ -397,10 +397,10 @@ local current_dir = vim.fn.fnamemodify(current_file, ':h')
     -- But, respect exclude files that are in .gitignore (.env, .DS_Store, etc.)
     respect_gitignore = true
   })
-end, { desc = "Find files in current buffer's directory" })
+end, { desc = "Find nearby files in (current buffer's directory)" })
 
--- Alternative: Live grep in current buffer's directory
-vim.keymap.set('n', '<leader>gc', function()
+-- Alternative: Live grep in current buffer's directory (space + fgn)
+vim.keymap.set('n', '<leader>fgn', function()
   local current_file = vim.fn.expand('%:p')
   if current_file == '' then
     print("No file in current buffer")
