@@ -413,6 +413,51 @@ vim.keymap.set('n', '<leader>fgn', function()
   })
 end, { desc = "Live grep in current buffer's directory" })
 
+-- Helper functions to disable/enable indent-blankline (ibl)
+local function disable_ibl()
+  local ok, ibl = pcall(require, "ibl")
+  if ok and ibl.disable then
+    ibl.disable()
+  end
+end
+
+local function enable_ibl_deferred()
+  vim.schedule(function()
+    local ok, ibl = pcall(require, "ibl")
+    if ok and ibl.enable then
+      ibl.enable()
+    end
+  end)
+end
+--  Open Telescope's colorscheme picker with live preview (Space + f + c)
+-- 🎨 Launch the Telescope colorscheme picker with live preview.
+-- Press <Shift+F2> to toggle between insert/normal mode inside the picker.
+-- Use <Enter> or <Esc> to select and close the picker.
+-- Note: Arrow keys work for navigation in insert mode.
+vim.keymap.set("n", "<leader>fc", function()
+  disable_ibl()
+
+  require("telescope.builtin").colorscheme({
+    prompt_title = "🎨 Change Colorscheme — Use ↑↓ to navigate",
+    enable_preview = true,
+
+    attach_mappings = function(prompt_bufnr, map)
+      local actions = require("telescope.actions")
+
+      local function close_and_enable_ibl()
+        enable_ibl_deferred()
+        actions.close(prompt_bufnr)
+      end
+
+      map("i", "<CR>", close_and_enable_ibl)
+      map("n", "<CR>", close_and_enable_ibl)
+      map("i", "<Esc>", close_and_enable_ibl)
+      map("n", "<Esc>", close_and_enable_ibl)
+
+      return true
+    end,
+  })
+end, { desc = "Telescope: 🎨 Pick colorscheme" })
 
 keymap("n", "<leader>gt",
   "<cmd>Telescope git_status<cr>",
