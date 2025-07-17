@@ -82,6 +82,15 @@ return {
   lazy = false,
 },
 
+-- colorful-winsep.nvim: Enhances Neovim's window separators with colorful,
+-- visually distinct lines. Improves split visibility by highlighting active
+-- and inactive windows differently.
+{
+  "nvim-zh/colorful-winsep.nvim",
+  config = true,
+  event = { "WinLeave" },
+},
+
 -- ╭──────────────────────────────╮
 -- │ 🌈  List of Color Schemes    │
 -- ╰──────────────────────────────╯
