@@ -459,6 +459,7 @@ vim.keymap.set("n", "<leader>fc", function()
   })
 end, { desc = "Telescope: 🎨 Pick colorscheme" })
 
+-- 🔄 Show Git status (modified files) via Telescope (Space + g + s)
 keymap("n", "<leader>gt",
   "<cmd>Telescope git_status<cr>",
   { desc = "Git status" })
