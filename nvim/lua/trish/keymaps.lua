@@ -679,10 +679,11 @@ vim.keymap.set('n', '<leader>sl', create_scratch_lua_buffer, {
 --   - Works even if plugin isn't loaded at startup
 
 -- 🔄 Toggle recall marks using deferred require
+-- key reasoning: double-m (mm) is fast and means mark/unmark toggle
 vim.keymap.set("n", "<leader>mm", function ()
   require("recall").toggle()
 end, {
-    desc = "Toggle recall marks",
+    desc = "🔄 Toggle recall mark (double-m = toggle)",
     noremap = true,
     silent = true,
 })
@@ -696,21 +697,32 @@ end, {
 --   - Perfect for commands that auto-register on plugin load
 
 -- 📋 Show a list of recall.nvim marks in Telescope - (space + ml)
+-- Mnemonic intent: m → marks, l → list
 vim.keymap.set("n", "<leader>ml", "<cmd>Telescope recall<CR>",{
-  desc = "List recall marks",
+  desc = "List all recall marks in Telescope list (ml = mark/list)",
 })
 
 -- Jump to next recall mark (space + mn)
+--Mnemonic intent: mark next
 vim.keymap.set("n", "<leader>mn", "<cmd>RecallNext<CR>", {
-  desc = "Jumpt to next recall mark"
+  desc = "⏭️ Jump to next recall mark (mn = mark/next)"
 })
 
 -- Jump to previous mark (space + mp)
+--  Mnemonic intent: mark previous
 vim.keymap.set("n", "<leader>mp", "<cmd>RecallPrevious<CR>", {
-  desc = "Jump to previous recall mark",
+  desc = "⏮️ Jump to previous recall mark (mp = mark/previous)",
 })
 
 -- Clear all recall marks (space + mc)
-vim.keymap.set("n", "<leader>mc","<cmd>RecallClear<CR>", {
-  desc = "Clear all recent marks",
+--  Mnemonic intent: mark clear
+vim.keymap.set("n", "<leader>mc", function()
+  vim.cmd("RecallClear")
+  vim.notify(
+    "All recall marks cleared 🧹 ",
+    vim.log.levels.INFO,
+    { title = "Recall"}
+  )
+end, {
+    desc = "Clear all recent recall marks (mc = mark/clear)",
 })
