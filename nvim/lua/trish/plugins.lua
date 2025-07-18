@@ -80,6 +80,9 @@ return {
   main = "ibl", -- uses the modern module name
   ---@module "ibl" -- (optional) tells Lazy to use the "ibl" module instead of default
   lazy = false,
+  config = function()
+    require("plugins.indent_blankline") --- importing custom plugin file.
+  end,
 },
 
 -- colorful-winsep.nvim: Enhances Neovim's window separators with colorful,
