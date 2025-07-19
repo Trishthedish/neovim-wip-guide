@@ -492,6 +492,55 @@ return {
   end,
 },
 
+-- ✂️ Guard: Async-first formatter + linter runner for Neovim 0.10+
+-- A lightweight, LSP-free alternative to tools like conform/null-ls
+-- ideal for scripting languages like bash. Chosen for its modular API
+-- and speed; planning to build a an on-demand custom Bash autoformatter
+-- via keymap
+{
+  "nvimdev/guard.nvim",
+  dependencies = { "nvimdev/guard-collection" },
+  event = { "BufReadPre", "BufNewFile" },
+  config = function()
+  -- These are your intended opts
+  vim.g.guard_config = {
+    fmt_on_save = false,
+    lsp_as_default_formatter = false,
+    save_on_fmt = true,
+    auto_lint = true,
+    lint_interval = 500,
+    refresh_diagnostic = true,
+  }
+
+  -- Make sure this is  on a new line, not after
+  -- the table literal without separator
+  local ft = require("guard.filetype")
+
+  -- Bash conditional Formatter (shfmt)
+  if vim.fn.executable("shfmt") == 1 then
+    -- Bash formatter
+    ft("sh"):fmt("shfmt")
+  else
+    vim.notify(
+      "[guard.nvim] 'shfmt' not found in PATH — Bash formatting disabled",
+      vim.log.levels.WARN
+    )
+  end
+
+  -- Lua conditional Formatter (stylua)
+  if vim.fn.executable("stylua") == 1 then
+    -- Lua Formatter
+    ft("lua"):fmt("stylua")
+  else
+    vim.notify(
+      "[guard.nvim] 'styula' not found in PATH - Lua formatting disabled",
+      vim.log.levels.WARN
+    )
+  end
+end,
+},
+
+
 -- ┌────────────────────────────────────┐
 -- │ 🏋️ Practice & Training              │
 -- └────────────────────────────────────┘

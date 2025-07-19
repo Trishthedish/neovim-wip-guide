@@ -726,3 +726,26 @@ vim.keymap.set("n", "<leader>mc", function()
 end, {
     desc = "Clear all recent recall marks (mc = mark/clear)",
 })
+
+
+-- ========================================
+-- Guard: Keymaps
+-- ========================================
+
+-- Format buffer with guard (space + fb)
+vim.keymap.set("n", "<leader>bf", function()
+  require("guard.format").do_fmt()
+
+  local ft = vim.bo.filetype
+  local messages = {
+    sh = "✨ Formatted: shell script ✅",
+    bash = "✨ Formatted: bash script ✅",
+    lua = "🌙 Formatted: Lua ✅",
+    -- python = "🐍 Formatted: Python",
+  }
+
+  local msg = messages[ft] or "✅ File formatted"
+  _G.guard_status_msg = msg
+
+  vim.notify(msg, vim.log.levels.INFO)
+end, { desc = "Format file with guard.nvim" })
