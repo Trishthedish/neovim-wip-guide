@@ -9,26 +9,30 @@ vim.fn.system({
 end
 vim.opt.rtp:prepend(lazypath)
 
--- 1. ⚙️ Load core settings + keymaps
+-- 1. ⚙️ Load core options
 require("trish.options")
-require("trish.keymaps")
 
 -- 2. 💡 Load plugins using lazy.nvim
 require("lazy").setup(require("trish.plugins"))
 
--- 3. 🧠 Load LSP configs (language-specific setups)
+-- 3. 🔑 Load keymaps *after* plugins are initialized
+require("trish.keymaps")
+
+-- 4. 🧠 Load LSP configs (language-specific setups)
 require("trish.lsp")
 
--- 4. 📌 Event-driven automation (autocmds)
--- This file sets up automatic behaviors triggered by Neovim events:
---     • Trailing whitespace highlighting when entering buffers
+-- 5. 📌 Load autocmds (event-driven automation)
+-- This file sets up behaviors triggered by Neovim events, such as:
+--     • Highlighting trailing whitespace on buffer enter
+--     • Automatically removing trailing whitespace on save
 --     • Language-specific indentation rules (Lua, Python, JS/TS)
---     • File type detection and buffer-specific settings
+--     • Filetype detection and buffer-local settings
 require("trish.autocmds")
 
--- 5. 🎯 Manual user commands
--- Custom commands that extend Neovim's functionality:
---     • :GitStageLines - Stage specific line ranges with surgical precision
---     • :TrimWhitespace - Manual cleanup of trailing whitespace
---     • Other on-demand utilities and shortcuts
+-- 6. 🛠️ Load custom user commands
+-- This file defines user-defined commands for manual actions, such as:
+--     • :GitStageLines – Stage specific line ranges with surgical precision
+--     • :TrimWhitespace – Manually removes trailing whitespace (if not auto)
+--     • :SortVimOptions – Alphabetically sort vim.opt settings with comments
+--     • :VimBeProgress – View VimBeGood training progress in a floating window
 require("trish.user_commands")
