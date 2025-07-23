@@ -749,3 +749,36 @@ vim.keymap.set("n", "<leader>bf", function()
 
   vim.notify(msg, vim.log.levels.INFO)
 end, { desc = "Format file with guard.nvim" })
+
+-- ========================================
+-- 🪟 Window Management
+-- ========================================
+local wk = require("which-key")
+
+wk.add({
+
+  -- Resize vertically
+  -- Increase height (space + k)
+  { "<leader>k", "<cmd>resize +2<cr>", desc = "🔼 Increase height" },
+  -- Decrease height (space + j)
+  { "<leader>-", "<cmd>resize -2<cr>", desc = "🔽 Decrease height" },
+
+  -- Reize horizontally
+  -- Decrease width (space + l)
+  { "<leader>l", "<cmd>vertical resize -5<cr>", desc = "➡️ Increase width" },
+  -- Increase width (space + h)
+  { "<leader>h", "<cmd>vertical resize +5<cr>", desc = "⬅️ Decrease width" },
+
+  -- Split/Close Window Group
+  { "<leader>s", group = "🌐 Splits" }, -- Split window group
+
+  -- Create horizontally split (space + sh)
+  { "<leader>sh", "<cmd>split<cr>", desc = "↔️ Create Horizontal split" },
+  -- Create vertical split (space + sv)
+  { "<leader>sv", "<cmd>vsplit<cr>", desc = "↕️ Create Vertical split" },
+  -- Close window split?
+  { "<leader>sc", "<cmd>close<cr>", desc = "❌ Close split" },
+  -- Close all other split and keep only current window
+  { "<leader>se", "<cmd>only<cr>", desc = "🧹 Close all other splits" },
+
+}, { mode = "n" })
