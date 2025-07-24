@@ -91,3 +91,16 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.expandtab = true -- Use spaces instead of tab characters
   end,
 })
+
+-- Configure conceallevel for Obsidian vault markdown files to enable enhanced UI features.
+-- This setting allows obsidian.nvim to display fancy checkboxes, hide markdown syntax,
+-- and provide a cleaner reading experience similar to the Obsidian app itself.
+-- Only applies to files within the specific Obsidian vault path to avoid affecting
+-- other markdown files edited elsewhere.
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "/Users/trish/Library/Mobile Documents/iCloud~md~obsidian/Documents/MasterVault/*.md",
+  desc = "Set conceallevel for Obsidian vault files to enable obsidian.nvim UI features",
+  callback = function()
+    vim.opt_local.conceallevel = 2
+  end,
+})

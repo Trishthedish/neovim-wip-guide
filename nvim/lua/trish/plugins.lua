@@ -274,6 +274,7 @@ return {
         "python",
         "bash",
         "markdown",
+        "markdown_inline",
         "json",
         "yaml",
         "html",
@@ -448,6 +449,43 @@ return {
     presets = "modern",
     plugins = {spelling = {enabled = true} },
     win = { border = "rounded", title = true, },
+  },
+},
+
+-- Obsidian.nvim: Seamless integration between Neovim and Obsidian.md vaults
+-- Provides note creation, linking, search, and markdown editing features
+-- Enables working with Obsidian notes directly from Neovim with vault awareness
+{
+  "epwalsh/obsidian.nvim",
+  version = "*",  -- Use latest stable release
+  lazy = true,
+  event = {
+    "BufReadPre /Users/trish/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/MasterVault/*.md",
+    "BufNewFile /Users/trish/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/MasterVault/*.md",
+  },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+  },
+  opts = {
+    workspaces = {
+      {
+        name = "MasterWorkspace",
+        path = "/Users/trish/Library/Mobile Documents/iCloud~md~obsidian/Documents/MasterVault",
+      },
+    },
+    completion = {
+      nvim_cmp = true,
+      min_chars = 2,
+    },
+    new_notes_location = "current_dir", -- Create new notes in current dir
+    open_notes_in = "vsplit", -- Open links in a vertical split
+
+    -- Disable all default mappings (you can define your own)
+    mappings = {},
+    ui = {
+      enable = true,
+      update_debounce = 200,
+    },
   },
 },
 
