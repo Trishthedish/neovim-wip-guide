@@ -34,8 +34,8 @@ keymap("n", "<leader>e", ":Ex<CR>", {
   desc = "Open file explorer",
 })
 
--- 💾 Save file with feedback (Space + w)
-vim.keymap.set("n", "<leader>w", function()
+-- 💾 Save file with feedback (Space + s)
+vim.keymap.set("n", "<leader>s", function()
   print("🔧 Save function triggered!")
   vim.cmd("w")
   vim.api.nvim_echo({{"💾 File saved with Space+w!", "Normal"}}, false, {})
@@ -759,7 +759,7 @@ wk.add({
 
   -- Resize vertically
   -- Increase height (space + k)
-  { "<leader>k", "<cmd>resize +2<cr>", desc = "🔼 Increase height" },
+  { "<leader>+", "<cmd>resize +2<cr>", desc = "🔼 Increase height" },
   -- Decrease height (space + j)
   { "<leader>-", "<cmd>resize -2<cr>", desc = "🔽 Decrease height" },
 
