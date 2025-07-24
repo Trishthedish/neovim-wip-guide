@@ -782,3 +782,27 @@ wk.add({
   { "<leader>se", "<cmd>only<cr>", desc = "🧹 Close all other splits" },
 
 }, { mode = "n" })
+
+-- ========================================
+-- 🎹 Keymaps for visual Key Analyzer
+-- ========================================
+
+-- Show all normal mode mappings (space + ka)
+vim.keymap.set('n', '<leader>ka', function()
+  require('key-analyzer').show('n', '')
+end, { desc = 'Show all key mappings in normal mode' })
+
+-- Show only normal mode mappings starting with <leader> prefix (space + kl)
+vim.keymap.set('n', '<leader>kl', function()
+  require('key-analyzer').show('n', '<leader>')
+end, { desc = 'Show mappings starting with <leader>' })
+
+-- Show all mappings that start with Ctrl in normal mode (space + kc)
+vim.keymap.set('n', '<leader>kc', function()
+  require('key-analyzer').show('n', '<C->')
+end, { desc = 'Show CTRL mappings in normal mode' })
+
+-- Then group those under one label for which-key
+require("which-key").add({
+  { "<leader>k", group = "Key Analyzer" },
+})

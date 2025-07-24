@@ -578,6 +578,25 @@ return {
 end,
 },
 
+-- 🎹 key-analyzer.nvim
+-- Visualizes your used and unused keys on a QWERTY keyboard layout.
+-- Lazy-loads and shows key heatmaps to help optimize your Neovim mappings.
+{
+  "meznaric/key-analyzer.nvim",
+  event = "VeryLazy",
+  opts = {
+    command_name = "KeyAnalyzer",
+    highlights = {
+      bracket_used = "KeyAnalyzerBracketUsed",
+      letter_used = "KeyAnalyzerLetterUsed",
+      bracket_unused = "KeyAnalyzerBracketUnused",
+      letter_unused = "KeyAnalyzerLetterUnused",
+      promo_highlight = "KeyAnalyzerPromo",
+      define_default_highlights = true,
+    },
+    layout = "qwerty",
+  },
+},
 
 -- ┌────────────────────────────────────┐
 -- │ 🏋️ Practice & Training              │
