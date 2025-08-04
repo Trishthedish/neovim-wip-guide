@@ -624,7 +624,6 @@ end,
  lazy = false,
  config = function()
    require("snacks").setup({
-     -- Enable just the dashboard for now
      bigfile = { enabled = false },
      notifier = { enabled = false },
      quickfile = { enabled = false },
