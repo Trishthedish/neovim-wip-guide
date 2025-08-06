@@ -163,7 +163,6 @@ return {
       theme = "dark", -- or "light" if you prefer
       transparent = false, -- or true if you want transparent bg
     })
-    vim.cmd.colorscheme("cyberdream")
   end,
 },
 
