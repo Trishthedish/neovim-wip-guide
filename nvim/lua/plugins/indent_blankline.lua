@@ -118,6 +118,7 @@ function M.set_mode(mode_name)
   for i, name in ipairs(M.mode_names) do
     if name == mode_name then
       M.current_mode = i
+      M.setup_highlights()  -- Ensure highlights are set before ibl.setup
       require("ibl").setup(M.configs[mode_name])
       vim.notify("Indent guides: " .. mode_name:gsub("_", " "), vim.log.levels.INFO)
       return
@@ -134,15 +135,35 @@ function M.setup()
 end
 
 -- 💡 Run initial setup now
-M.setup()
+-- Don't run setup immediately - let's control when it happens
+-- M.setup()
 
 -- Auto-reapply highlights and IBL config when colorscheme changes
 vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  group = vim.api.nvim_create_augroup("IndentBlanklineCustom", { clear = true }),
   callback = function()
-    M.setup()  -- This calls both setup_highlights() and ibl.setup()
+    -- Set highlights immediately when colorscheme changes
+    M.setup_highlights()
   end,
-  nested = true,  -- Allow nested autocmd execution
-  desc = "Reapply indent-blankline setup after colorscheme change"
+  desc = "Setup indent-blankline highlights after colorscheme change"
+})
+
+-- Setup IBL after everything is loaded
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    M.setup()
+  end,
+  desc = "Initial indent-blankline setup"
+})
+
+-- Also setup on BufEnter to ensure it's working
+vim.api.nvim_create_autocmd("BufEnter", {
+  once = true,
+  callback = function()
+    M.setup()
+  end,
+  desc = "Ensure indent-blankline is setup"
 })
 
 return M
