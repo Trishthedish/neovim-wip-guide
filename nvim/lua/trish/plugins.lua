@@ -231,6 +231,22 @@ return {
   end,
 },
 
+-- oil.nvim - A modern, minimal file manager that opens directories as editable buffers.
+-- Lets you navigate, create, rename, and delete files or folders right from a buffer.
+-- Great alternative to bulky tree UIs – stays close to native Neovim workflows.
+{
+  "stevearc/oil.nvim",
+  lazy = false,
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  opts = {},
+  config = function(_, opts)
+    require("oil").setup(opts)
+    -- ensure netrw is *disabled* so it doesn't take over the '-' key
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+  end,
+},
+
 -- ┌────────────────────────────────────┐
 -- │ 🧠 LSP                             │
 -- └────────────────────────────────────┘

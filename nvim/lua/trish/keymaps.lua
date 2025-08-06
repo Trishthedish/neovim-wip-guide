@@ -806,3 +806,37 @@ end, { desc = 'Show CTRL mappings in normal mode' })
 require("which-key").add({
   { "<leader>k", group = "Key Analyzer" },
 })
+
+-- ========================================
+-- 🛢️ Keymaps Oil
+-- ========================================
+local wk = require("which-key")
+
+-- which-key v3: wk.add() creates both the keymap AND registers it for display
+-- No need for separate vim.keymap.set calls
+wk.add({
+
+  -- Set up oil prefix group
+  { "<leader>o", group = "Oil" },
+
+  -- Open oil in currect directory  (space + oo)
+  { "<leader>oo", "<cmd>Oil<CR>",
+    desc = "Open Oil in current directory"
+  },
+
+  -- Open Oil in floating window (space + of)
+  { "<leader>of", "<cmd>lua require('oil').open_float()<CR>",
+    desc = "Open Oil in floating window"
+  },
+
+  -- Open Oil in root directory (space + or)
+  { "<leader>or", "<cmd>lua require('oil').open(nil)<CR>",
+    desc = "Open Oil at root directory"
+  },
+
+  -- Open parent directory in Oil (-)
+  { "-", "<cmd>Oil<CR>",
+    desc = "Open parent directory in Oil"
+  },
+
+}, { mode = "n" })
