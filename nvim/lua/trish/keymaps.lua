@@ -29,11 +29,6 @@ local keymap = vim.keymap.set
 -- ":Ex<CR>": is the command to open netrw (the file explorer) and "press Enter"
 -- -------- The 'desc' helps tools like 'which-key' show what the shortcut does
 
--- 🗂 Open file explorer (Space + e)
-keymap("n", "<leader>e", ":Ex<CR>", {
-  desc = "Open file explorer",
-})
-
 -- 💾 Save file with feedback (Space + s)
 vim.keymap.set("n", "<leader>s", function()
   print("🔧 Save function triggered!")
@@ -51,20 +46,6 @@ keymap("n", "<D-v>", '"+p', {
   desc = "Paste from system clipboard (Cmd+V)",
 })
 
--- Select All (⌘A)
-keymap("n", "<D-a>", "ggVG", {
-    noremap = true,
-    silent = true,
-    desc = "Select all (cmd+A)",
-})
-
--- 📄 Copy current line (⌘C in normal mode)
-keymap("n", "<D-c>", '"+yy', {
-  noremap = true,
-  silent = true,
-  desc = "Copy current line (Cmd+C)",
-})
-
 -- 📋 Copy entire buffer WITHOUT line numbers (Space + y + n)
 keymap("n", "<leader>yn", function()
   vim.opt.number = false
@@ -74,14 +55,6 @@ keymap("n", "<leader>yn", function()
   vim.opt.relativenumber = true
 end, {
   desc = "Copy whole buffer without line numbers",
-})
-
--- 📋 Copy entire buffer WITH visible line numbers (Space + y + l)
-keymap("n", "<leader>yl", function()
-  vim.cmd('set number relativenumber') -- make sure numbers are visible
-  vim.cmd('normal! ggVG"+y')
-end, {
-  desc = "Copy whole buffer with line numbers",
 })
 
 -- ✂️ Trim trailing whitespace manually (Space + t + w)
@@ -822,6 +795,12 @@ wk.add({
   -- Open oil in currect directory  (space + oo)
   { "<leader>oo", "<cmd>Oil<CR>",
     desc = "Open Oil in current directory"
+  },
+
+  -- Open Oil in file explorer - replaces buffer (space + oe)
+  {
+    "<leader>oe", "<cmd>Oil<cr>",
+    desc = "Open file explorer (replaces buffer)"
   },
 
   -- Open Oil in floating window (space + of)
