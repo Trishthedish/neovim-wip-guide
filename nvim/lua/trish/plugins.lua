@@ -108,9 +108,11 @@ return {
   config = function()
     -- Configure Tokyo Night theme customizations
     require("tokyonight").setup({
-      on_highlights = function(hl, c)
+      on_highlights = function(hl)
+
         -- Customize cursor line appearance
         hl.CursorLine = {
+          bg = "#2d3149", -- a subtle bluish background for the cursor line
           fg = "NONE",   -- Keep default text color (commented out)
         }
 
