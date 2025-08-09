@@ -521,25 +521,38 @@ return {
 -- Cheatsheet.nvim: 🧾 Interactive reference for keymaps, Lua APIs, and plugin commands
 -- Launch via `:Cheatsheet` or Telescope (`<leader>cc`) to search across docs
 {
-  "sudormrfbin/cheatsheet.nvim",
+  "doctorfree/cheatsheet.nvim",
+  event = "VeryLazy",
   dependencies = {
-    "nvim-telescope/telescope.nvim",
-    "nvim-lua/popup.nvim",
-    "nvim-lua/plenary.nvim",
-  },
-  cmd = "Cheatsheet",
-  keys = {
-    { "<leader>cc", "<cmd>Telescope cheatsheet<CR>", desc = "📓 Cheatsheet (Telescope UI)" },
+    { "nvim-telescope/telescope.nvim" },
+    { "nvim-lua/popup.nvim" },
+    { "nvim-lua/plenary.nvim" },
   },
   config = function()
+    local ctactions = require("cheatsheet.telescope.actions")
     require("cheatsheet").setup({
-      -- Load all cheatsheets by default (omit `enabled` for max coverage)
       bundled_cheatsheets = {
-        -- Don't exclude any unless you want to skip something specific like:
-        disabled = { "nerd-fonts" },
+        enabled = { "default", "lua", "markdown", "regex" },
+        disabled = { "nerd-fonts", "netrw", "unicode" },
       },
       bundled_plugin_cheatsheets = {
-        enabled = { "gitsigns", "telescope", "nvim-cmp", "harpoon" },
+        enabled = { "telescope.nvim", "gitsigns" },
+      },
+      include_only_installed_plugins = true,
+      telescope_mappings = {
+
+        -- Fills the command line with cheat value (enter)
+        -- If cheat is a command
+        ["<CR>"] = ctactions.select_or_fill_commandline,
+
+        -- Select or execute command immedately (alt + enter)
+        ["<A-CR>"] = ctactions.select_or_execute,
+
+        -- Copies the "cheat value" to your system clipboard (ctrl + y )
+        ["<C-Y>"] = ctactions.copy_cheat_value,
+
+        -- Opens your *user cheatsheet* file for editing (ctrl + e)
+        ["<C-E>"] = ctactions.edit_user_cheatsheet,
       },
     })
   end,
