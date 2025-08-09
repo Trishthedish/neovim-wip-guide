@@ -30,10 +30,10 @@ local keymap = vim.keymap.set
 -- -------- The 'desc' helps tools like 'which-key' show what the shortcut does
 
 -- 💾 Save file with feedback (Space + s)
-vim.keymap.set("n", "<leader>s", function()
+keymap("n", "<leader>s", function()
   print("🔧 Save function triggered!")
   vim.cmd("w")
-  vim.api.nvim_echo({{"💾 File saved with Space+w!", "Normal"}}, false, {})
+  vim.api.nvim_echo({{"💾 File saved with Space+s!", "Normal"}}, false, {})
 end, {
   noremap = true,
   desc = "Save file with feedback",
@@ -73,7 +73,7 @@ end, { desc = "Cycle indent guide styles" })
 
 -- 🔁 Reload Luasnip snippets from /nvim/lua/trish/snippets/
 -- This lets you refresh your snippets without restarting Neovim.
-vim.keymap.set("n", "<leader>sr", function()
+keymap("n", "<leader>sr", function()
   require("luasnip.loaders.from_lua").lazy_load({
     paths = "~/.config/nvim/lua/trish/snippets",
   })
@@ -82,7 +82,7 @@ end, { desc = "LuaSnip: Reload Snippets" })
 
 -- 🚀 Hot-reload current Lua file
 -- (great for plugin/dev work!)
-vim.keymap.set("n", "<leader>rr",
+keymap("n", "<leader>rr",
   "<cmd>luafile %<CR>",
 { desc = "Reload current Lua file" })
 
@@ -90,12 +90,12 @@ vim.keymap.set("n", "<leader>rr",
 -- Press <Esc><Esc> in normal mode to clear lingering `/` or `?` search highlights.
 -- Handy after navigating with `n` or `N` and no longer needing the highlight.
 -- Mimics behavior from some plugins or IDEs for quick visual reset.
-vim.keymap.set("n", "<Esc><Esc>", "<cmd>nohlsearch<CR>", {
+keymap("n", "<Esc><Esc>", "<cmd>nohlsearch<CR>", {
   desc = "Clear search highlight"
 })
 
 -- 📓 Open Cheatsheet
-keymap("n", "<leader>cc", "<cmd>Telescope Cheatsheet<CR>", {
+keymap("n", "<leader>cc", "<cmd>Telescope cheatsheet<CR>", {
   desc = "📓 Cheetsheets via Telescope"
 })
 
@@ -209,7 +209,7 @@ keymap("n", "<leader>da", vim.diagnostic.setloclist, {
 -- Switch between relative line numbers (your default)
 -- and absolute-only line numbers.
 -- This uses snacks.nvim to manage UI state cleanly.
-vim.keymap.set("n", "<leader>ln", function()
+keymap("n", "<leader>ln", function()
   local snacks = require("snacks")
 
   -- Check if snacks has toggle utility and our toggle exists
@@ -344,7 +344,7 @@ keymap("n", "<leader>fk",
 )
 
 -- 🔎 Fuzzy find files relative to the current buffer's location (Space + f + n)
-vim.keymap.set('n', '<leader>fn', function()
+keymap('n', '<leader>fn', function()
   -- Get the absolute path of the file currently open in the buffer
   local current_file = vim.fn.expand('%:p')
 
@@ -373,7 +373,7 @@ local current_dir = vim.fn.fnamemodify(current_file, ':h')
 end, { desc = "Find nearby files in (current buffer's directory)" })
 
 -- Alternative: Live grep in current buffer's directory (space + fgn)
-vim.keymap.set('n', '<leader>fgn', function()
+keymap('n', '<leader>fgn', function()
   local current_file = vim.fn.expand('%:p')
   if current_file == '' then
     print("No file in current buffer")
@@ -402,12 +402,13 @@ local function enable_ibl_deferred()
     end
   end)
 end
+
 --  Open Telescope's colorscheme picker with live preview (Space + f + c)
 -- 🎨 Launch the Telescope colorscheme picker with live preview.
 -- Press <Shift+F2> to toggle between insert/normal mode inside the picker.
 -- Use <Enter> or <Esc> to select and close the picker.
 -- Note: Arrow keys work for navigation in insert mode.
-vim.keymap.set("n", "<leader>fc", function()
+keymap("n", "<leader>fc", function()
   disable_ibl()
 
   require("telescope.builtin").colorscheme({
@@ -437,7 +438,11 @@ keymap("n", "<leader>gt",
   "<cmd>Telescope git_status<cr>",
   { desc = "Git status" })
 
--- =======================================
+-- 🔭  Show registers in Telescope (space + fr)
+keymap('n', '<leader>fr', '<cmd>Telescope registers<CR>', {
+  desc = 'Telescope: Show registers'
+})
+
 -- ========================================
 -- 🌿 Git Operations with Gitsigns
 -- ========================================
@@ -633,7 +638,7 @@ local function create_scratch_lua_buffer()
 end
 
 -- Create the keymap (using <leader>sl for "scratch lua")
-vim.keymap.set('n', '<leader>sl', create_scratch_lua_buffer, {
+keymap('n', '<leader>sl', create_scratch_lua_buffer, {
   desc = 'Create scratch Lua buffer in vertical split',
   noremap = true,
   silent = true
@@ -653,7 +658,7 @@ vim.keymap.set('n', '<leader>sl', create_scratch_lua_buffer, {
 
 -- 🔄 Toggle recall marks using deferred require
 -- key reasoning: double-m (mm) is fast and means mark/unmark toggle
-vim.keymap.set("n", "<leader>mm", function ()
+keymap("n", "<leader>mm", function ()
   require("recall").toggle()
 end, {
     desc = "🔄 Toggle recall mark (double-m = toggle)",
@@ -671,25 +676,25 @@ end, {
 
 -- 📋 Show a list of recall.nvim marks in Telescope - (space + ml)
 -- Mnemonic intent: m → marks, l → list
-vim.keymap.set("n", "<leader>ml", "<cmd>Telescope recall<CR>",{
+keymap("n", "<leader>ml", "<cmd>Telescope recall<CR>",{
   desc = "List all recall marks in Telescope list (ml = mark/list)",
 })
 
 -- Jump to next recall mark (space + mn)
 --Mnemonic intent: mark next
-vim.keymap.set("n", "<leader>mn", "<cmd>RecallNext<CR>", {
+keymap("n", "<leader>mn", "<cmd>RecallNext<CR>", {
   desc = "⏭️ Jump to next recall mark (mn = mark/next)"
 })
 
 -- Jump to previous mark (space + mp)
 --  Mnemonic intent: mark previous
-vim.keymap.set("n", "<leader>mp", "<cmd>RecallPrevious<CR>", {
+keymap("n", "<leader>mp", "<cmd>RecallPrevious<CR>", {
   desc = "⏮️ Jump to previous recall mark (mp = mark/previous)",
 })
 
 -- Clear all recall marks (space + mc)
 --  Mnemonic intent: mark clear
-vim.keymap.set("n", "<leader>mc", function()
+keymap("n", "<leader>mc", function()
   vim.cmd("RecallClear")
   vim.notify(
     "All recall marks cleared 🧹 ",
@@ -706,7 +711,7 @@ end, {
 -- ========================================
 
 -- Format buffer with guard (space + fb)
-vim.keymap.set("n", "<leader>bf", function()
+keymap("n", "<leader>bf", function()
   require("guard.format").do_fmt()
 
   local ft = vim.bo.filetype
@@ -761,19 +766,19 @@ wk.add({
 -- ========================================
 
 -- Show all normal mode mappings (space + ka)
-vim.keymap.set('n', '<leader>ka', function()
-  require('key-analyzer').show('n', '')
-end, { desc = 'Show all key mappings in normal mode' })
+keymap("n", "<leader>ka", function()
+  require("key-analyzer").show("n", "")
+end, { desc = "Show all key mappings in normal mode" })
 
 -- Show only normal mode mappings starting with <leader> prefix (space + kl)
-vim.keymap.set('n', '<leader>kl', function()
-  require('key-analyzer').show('n', '<leader>')
-end, { desc = 'Show mappings starting with <leader>' })
+keymap("n", "<leader>kl", function()
+  require("key-analyzer").show("n", "<leader>")
+end, { desc = "Show mappings starting with <leader>" })
 
 -- Show all mappings that start with Ctrl in normal mode (space + kc)
-vim.keymap.set('n', '<leader>kc', function()
-  require('key-analyzer').show('n', '<C->')
-end, { desc = 'Show CTRL mappings in normal mode' })
+keymap("n", "<leader>kc", function()
+  require("key-analyzer").show("n", "<C->")
+end, { desc = "Show CTRL mappings in normal mode" })
 
 -- Then group those under one label for which-key
 require("which-key").add({
