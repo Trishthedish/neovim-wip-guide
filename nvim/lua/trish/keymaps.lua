@@ -29,6 +29,13 @@ local keymap = vim.keymap.set
 -- ":Ex<CR>": is the command to open netrw (the file explorer) and "press Enter"
 -- -------- The 'desc' helps tools like 'which-key' show what the shortcut does
 
+-- Find and center
+-- This makes search navigation smoother and keeps context visible around the match.
+-- 'n' → next search match, keep it centered & open folds
+keymap('n', 'n', 'nzzzv')
+-- 'N' → previous search match, keep it centered & open folds
+keymap('n', 'N', 'Nzzzv')
+
 -- 💾 Save file with feedback (Space + s)
 keymap("n", "<leader>s", function()
   print("🔧 Save function triggered!")
@@ -735,29 +742,99 @@ local wk = require("which-key")
 
 wk.add({
 
-  -- Resize vertically
-  -- Increase height (space + k)
-  { "<leader>+", "<cmd>resize +2<cr>", desc = "🔼 Increase height" },
-  -- Decrease height (space + j)
-  { "<leader>-", "<cmd>resize -2<cr>", desc = "🔽 Decrease height" },
+  -- Resize Width --
+  -- Increase width (space + Arrow Right)
+  { "<leader><Right>", "<cmd>vertical resize +2<cr>",
+    desc = "➡️ Increase width"
+  },
+  -- Decrease width (space + Arrow Left)
+  { "<leader><Left>", "<cmd>vertical resize -2<cr>",
+    desc = "⬅️ Decrease width"
+  },
 
-  -- Reize horizontally
-  -- Decrease width (space + l)
-  { "<leader>l", "<cmd>vertical resize -5<cr>", desc = "➡️ Increase width" },
-  -- Increase width (space + h)
-  { "<leader>h", "<cmd>vertical resize +5<cr>", desc = "⬅️ Decrease width" },
+  -- Resize Height --
+  -- Increase height (space + Arrow Up)
+  { "<leader><Up>", "<cmd>resize +2<cr>",
+    desc = "🔼 Increase height"
+  },
+  -- Increase height (space + Arrow Down)
+  { "<leader><Down>", "<cmd>resize -2<cr>",
+    desc = "🔽 Decrease height"
+  },
 
-  -- Split/Close Window Group
-  { "<leader>s", group = "🌐 Splits" }, -- Split window group
+-- Split Window Creation --
 
-  -- Create horizontally split (space + sh)
-  { "<leader>sh", "<cmd>split<cr>", desc = "↔️ Create Horizontal split" },
-  -- Create vertical split (space + sv)
-  { "<leader>sv", "<cmd>vsplit<cr>", desc = "↕️ Create Vertical split" },
-  -- Close window split?
-  { "<leader>sc", "<cmd>close<cr>", desc = "❌ Close split" },
-  -- Close all other split and keep only current window
-  { "<leader>se", "<cmd>only<cr>", desc = "🧹 Close all other splits" },
+-- Create horizontal split (space + h)
+  { "<leader>h", "<cmd>split<cr>",
+    desc = "↔️ Split window horizontally"
+  },
+  -- Create vertically split (space + v)
+  { "<leader>v", "<cmd>vsplit<cr>",
+    desc = "↕️ Split window vertically"
+  },
+
+  -- Window Actions Group --
+
+  { "<leader>s", group = "🌐 Splits" },
+
+  -- Close current split (space + sx)
+  { "<leader>sx", "<cmd>close<cr>",
+    desc = "❌ Close current split"
+  },
+  -- Eqaulize split sizes (space + se)
+  { "<leader>se", "<C-w>=",
+    desc = "🟰 Equalize split sizes"
+  },
+  -- Keep only current split (space + so)
+  { "<leader>so", "<cmd>only<cr>",
+    desc = "🧹 Keep only current split"
+  },
+}, { mode = "n" })
+
+-- Split Navigation --
+wk.add({
+  -- move up (ctrl + k)
+  { "<C-k>", ":wincmd k<CR>", desc = "Move up" },
+
+  -- Move down (ctrl + j)
+  { "<C-j>", ":wincmd j<CR>", desc = "Move down" },
+
+  -- Move left (ctrl + h)
+  { "<C-h>", ":wincmd h<CR>", desc = "Move left" },
+
+  -- Move right (ctrl + j)
+  { "<C-l>", ":wincmd l<CR>", desc = "Move right" }
+
+}, { mode = "n" })
+
+-- Tab Management --
+wk.add({
+  { "<leader>t", group = "📑 Tabs" },
+
+  -- Open new tab (space + to)
+  { "<leader>to", "<cmd>tabnew<cr>",
+    desc = "➕ Open new tab"
+  },
+
+  -- Close current tab (space + tx)
+  { "<leader>tx", "<cmd>tabclose<cr>",
+    desc = "❌ Close current tab"
+  },
+
+  -- Go to next tab (spcace + tn)
+  { "<leader>tn", "<cmd>tabn<cr>",
+    desc = "➡️ Next tab"
+  },
+
+  -- Go to previous tab (space + tp)
+  { "<leader>tp", "<cmd>tabp<cr>",
+    desc = "⬅️ Previous tab"
+  },
+
+  -- List all Tabs (space + tt)
+  { "<leader>tt", "<cmd>tabs<cr>",
+    desc = "📋 List all tabs"
+  },
 
 }, { mode = "n" })
 
