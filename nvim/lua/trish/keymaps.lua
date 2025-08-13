@@ -2,11 +2,6 @@
 -- 🧭 Custom keybindings (shortcuts) for Neovim
 -- These mappings improve productivity by making common actions faster.
 
--- 🧠 Legend:
--- Modes: "n" = Normal, "v" = Visual, "i" = Insert
--- <leader> = Spacebar (set below)
--- <D-*> = Cmd key on macOS (⌘)
-
 -- 🚀 Set <leader> key
 vim.g.mapleader = " "
 
@@ -18,22 +13,13 @@ local keymap = vim.keymap.set
 -- ========================================
 -- 📁 NORMAL MODE KEYBINDINGS
 -- ========================================
--- ⓘ This first keybinding is fully broken down for learning purposes:
--- - It explains what each part of the keymap does.
--- - All future keymaps below will follow a cleaner format (see 🗂 example).
--- - This helps keep things readable while still leaving one “reference” example.
 
--- Normal mode keybinding: Open the file explorer
--- "n": means this works in Normal mode
--- "<leader>e": means you press: Spacebar, then E
--- ":Ex<CR>": is the command to open netrw (the file explorer) and "press Enter"
--- -------- The 'desc' helps tools like 'which-key' show what the shortcut does
-
--- Find and center
--- This makes search navigation smoother and keeps context visible around the match.
--- 'n' → next search match, keep it centered & open folds
+-- Keep search mataches centered when navigating
+-- with `n` (next match) or 'N' (previous match).
+-- This makes search navigation smoother and keeps
+-- context visible around the match. Stops them from
+-- sticking at top/bottom
 keymap('n', 'n', 'nzzzv')
--- 'N' → previous search match, keep it centered & open folds
 keymap('n', 'N', 'Nzzzv')
 
 -- 💾 Save file with feedback (Space + s)
@@ -64,21 +50,21 @@ end, {
   desc = "Copy whole buffer without line numbers",
 })
 
--- ✂️ Trim trailing whitespace manually (Space + t + w)
+-- ✂️ Trim trailing whitespace manually (Space + tw)
 keymap("n", "<leader>tw", "<cmd>TrimWhitespace<CR>", {
   noremap = true,
   silent = true,
   desc = "Trim trailing whitespace manually",
 })
 
--- 📐 Cycle through indent guide settings (Space + t + i)
+-- 📐 Cycle through indent guide settings (Space + ti)
 -- Cycles through: rainbow_dashed → rainbow_continuous → gray_simple → repeat
 -- Useful for adjusting visual indentation cues based on current coding context
 keymap('n', '<leader>ti', function()
   require('plugins.indent_blankline').cycle_indent_guides()
 end, { desc = "Cycle indent guide styles" })
 
--- 🔁 Reload Luasnip snippets from /nvim/lua/trish/snippets/
+-- 🔁 Reload Luasnip snippets from /nvim/lua/trish/snippets/ (space + sr)
 -- This lets you refresh your snippets without restarting Neovim.
 keymap("n", "<leader>sr", function()
   require("luasnip.loaders.from_lua").lazy_load({
@@ -87,7 +73,7 @@ keymap("n", "<leader>sr", function()
   vim.notify("🔄 Snippets reloaded!", vim.log.levels.INFO)
 end, { desc = "LuaSnip: Reload Snippets" })
 
--- 🚀 Hot-reload current Lua file
+-- 🚀 Hot-reload current Lua file (space + rr)
 -- (great for plugin/dev work!)
 keymap("n", "<leader>rr",
   "<cmd>luafile %<CR>",
@@ -101,10 +87,23 @@ keymap("n", "<Esc><Esc>", "<cmd>nohlsearch<CR>", {
   desc = "Clear search highlight"
 })
 
--- 📓 Open Cheatsheet
+-- 📓 Open Cheatsheet (space + cc)
 keymap("n", "<leader>cc", "<cmd>Telescope cheatsheet<CR>", {
   desc = "📓 Cheetsheets via Telescope"
 })
+
+-- Paste mode toggle: disables autoindent and other autoformatting (fn + F2):
+-- for clean pasting of text
+keymap('n', '<F2>', function()
+  vim.o.paste = not vim.o.paste
+  local status
+  if vim.o.paste then
+    status = "📋 Paste mode ON ✅ — autoindent disabled"
+  else
+    status = "📋 Paste mode OFF ❌ — autoindent enabled"
+  end
+  print(status)
+end, { desc = "Toggle paste mode (clean paste, disables autoindent)" })
 
 -- ========================================
 -- 🔧 LSP KEYBINDINGS (Language Server Protocol)
