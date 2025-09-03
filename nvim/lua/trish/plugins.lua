@@ -94,6 +94,60 @@ return {
   event = { "WinLeave" },
 },
 
+-- nvim-ufo: Modern, high-performance folding for Neovim
+{
+  "kevinhwang91/nvim-ufo",
+  dependencies = { "kevinhwang91/promise-async" },
+  config = function()
+      -- Fold column like VSCode gutter arrows
+      vim.o.foldcolumn = "1" -- Show fold column (like VSCode gutter arrows)
+      -- Expand all folds by default
+      vim.o.foldlevel = 99 -- Expand all folds by default
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+      -- Use expression-based folding with UFO
+      vim.o.foldmethod = "expr"
+      vim.o.foldexpr = "v:lua.require'ufo'.foldexpr()"
+
+      -- UFO setup
+      local ufo = require("ufo")
+
+      ufo.setup({
+        provider_selector = function(bufnr, filetype, buftype)
+          -- Use treesitter first, fallback to indent
+          return { "treesitter", "indent" }
+        end,
+
+        -- Virtual text handler: show method signatures or summary
+        -- for folded code
+        fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
+          local newVirtText = {}
+          local suffix = (" ... [%d lines]"):format(endLnum - lnum)
+          local sufWidth = vim.fn.strdisplaywidth(suffix)
+          local targetWidth = width - sufWidth
+          local curWidth = 0
+
+          for _, chunk in ipairs(virtText) do
+              local chunkText = chunk[1]
+              local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+              if curWidth + chunkWidth <= targetWidth then
+                  table.insert(newVirtText, chunk)
+                  curWidth = curWidth + chunkWidth
+              else
+                  chunkText = vim.fn.strcharpart(chunkText, 0, targetWidth - curWidth)
+                  table.insert(newVirtText, { chunkText, chunk[2] })
+                  curWidth = curWidth + vim.fn.strdisplaywidth(chunkText)
+                  break
+              end
+          end
+
+          table.insert(newVirtText, { suffix, "MoreMsg" })
+          return newVirtText
+        end,
+      })
+   end,
+},
+
 -- ╭──────────────────────────────╮
 -- │ 🌈  List of Color Schemes    │
 -- ╰──────────────────────────────╯

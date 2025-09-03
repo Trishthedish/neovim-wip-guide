@@ -900,3 +900,35 @@ wk.add({
   },
 
 }, { mode = "n" })
+
+-- ========================================
+-- Nvim-UFO: Modern folding for Neovim
+-- Goal: VS Code–like folding for Python classes/methods
+-- ========================================
+
+-- ==========================
+-- Basic UFO folding commands
+-- ==========================
+
+-- Open all folds (zR)
+-- Expands every fold in the buffer, fully showing code.
+vim.keymap.set("n", "zR", function()
+    require("ufo").openAllFolds()
+end, { desc = "UFO: Open all folds in buffer" })
+
+-- Close all folds (zM)
+-- Collapses every fold in the buffer, including classes and methods.
+vim.keymap.set("n", "zM", function()
+    require("ufo").closeAllFolds()
+end, { desc = "UFO: Close all folds in buffer" })
+
+-- Open all folds except kinds (zr)
+-- `kinds` are types of folds you can define.
+-- For example, Treesitter nodes like:
+-- "function_definition", "class_definition", or "comment".
+-- Using this, you could open all folds except functions,
+-- keeping method bodies closed. In practice, this is more
+-- advanced and rarely needed, but it allows selective opening.
+vim.keymap.set("n", "zr", function()
+    require("ufo").openFoldsExceptKinds()
+end, { desc = "UFO: Open all folds except certain kinds (advanced)" })
