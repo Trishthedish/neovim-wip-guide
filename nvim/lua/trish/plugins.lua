@@ -23,7 +23,7 @@ return {
     options = {
       ignore_focus = {},
       always_divide_middle = true,
-      globalstatus = false,
+      globalstatus = true, -- single statusline for all splits, reflects current window
       refresh = {
         statusline = 1000,
         tabline = 1000,
@@ -69,8 +69,16 @@ return {
           'filetype'  -- This shows language with icon (lua , js , py  etc.)
         },
         lualine_y = {'progress'},
-        lualine_z = {'location'}
-      }
+        lualine_z = {'location'}, -- 👈 shows line:column
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+		lualine_c = { 'filename' },
+		lualine_x = {},
+		lualine_y = {},
+		lualine_z = { 'location' }, -- 👈 ensures inactive windows also show column
+      },
     })
   end,
 },
