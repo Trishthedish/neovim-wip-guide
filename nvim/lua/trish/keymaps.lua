@@ -423,16 +423,28 @@ keymap("n", "<leader>fc", function()
 
     attach_mappings = function(prompt_bufnr, map)
       local actions = require("telescope.actions")
+      local action_state = require("telescope.actions.state")
 
-      local function close_and_enable_ibl()
+      local function set_colorscheme_and_close()
+        local selection = action_state.get_selected_entry()
+        if selection and selection.value then
+
+          vim.defer_fn(function()
+            vim.cmd("colorscheme " .. selection.value)
+          end, 50)
+        end
+
         enable_ibl_deferred()
         actions.close(prompt_bufnr)
       end
 
-      map("i", "<CR>", close_and_enable_ibl)
-      map("n", "<CR>", close_and_enable_ibl)
-      map("i", "<Esc>", close_and_enable_ibl)
-      map("n", "<Esc>", close_and_enable_ibl)
+      -- <Enter> applies scheme + closes picker
+      map("i", "<CR>", set_colorscheme_and_close)
+      map("n", "<CR>", set_colorscheme_and_close)
+
+      -- <Esc> cancels without applying
+      map("i", "<Esc>", actions.close)
+      map("n", "<Esc>", actions.close)
 
       return true
     end,
