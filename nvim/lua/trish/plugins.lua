@@ -450,7 +450,7 @@ return {
         -- ~/.config/nvim/lua/trish/snippets
         vim.api.nvim_create_user_command("ReloadSnippets", function()
         require("luasnip.loaders.from_lua").load({
-          paths = "~/.config/nvim/trish/snippets",
+          paths = "~/.config/nvim/lua/trish/snippets",
         })
         print("🔁 LuaSnip snippets reloaded!")
         end, {})

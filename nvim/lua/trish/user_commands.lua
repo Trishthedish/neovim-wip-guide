@@ -221,3 +221,39 @@ vim.api.nvim_create_user_command("ToggleLineNumbers", function()
 end, {
   desc = "Toggle between relative and absolute line numbers",
 })
+
+-- ========================================
+-- 🐍 Python LSP Helper Commands
+-- ========================================
+-- Usage: PyrightPythonPath
+-- Optional helper commands related to Python LSPs.
+-- These are utility commands for development and debugging, not required for Pyright itself.
+
+-- Print the Python interpreter currently being used by Pyright for the buffer
+-- Usage: :PyrightPythonPath
+-- - Automatically detects:
+--   1. Active virtualenv from shell (VIRTUAL_ENV)
+--   2. Common per-project virtual environments (./.venv/bin/python, ./venv/bin/python)
+--   3. Fallback to system Python (python3, python)
+vim.api.nvim_create_user_command("PyrightPythonPath", function()
+  local buf_path = vim.api.nvim_buf_get_name(0)
+  local workspace = vim.fn.fnamemodify(buf_path, ":h")
+
+  -- Optional: replicate the same logic you use in your LSP config
+  local function get_python_path(workspace)
+    if vim.env.VIRTUAL_ENV then
+      return vim.env.VIRTUAL_ENV .. "/bin/python"
+    end
+    local paths = { workspace .. "/.venv/bin/python", workspace .. "/venv/bin/python" }
+    for _, path in ipairs(paths) do
+      if vim.fn.filereadable(path) == 1 then
+        return path
+      end
+    end
+    return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+  end
+
+  print("Current Python path:", get_python_path(workspace))
+end, {
+  desc = "Print the Python interpreter currently used by Pyright for this buffer",
+})
